@@ -2,8 +2,9 @@ using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using WebApi.Endpoints;
 using FluentValidation;
+using WebApi.Middleware;
+using Application.Commands.CreateCustomer;
 using Application.Validators;
-using Application.Handlers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,10 +20,17 @@ builder.Services.AddValidatorsFromAssemblyContaining<CreateCustomerValidator>();
 
 var app = builder.Build();
 
+// Add Validation Middleware
+app.UseMiddleware<ValidationMiddleware>();
+
+// Apply migrations and update the database
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<CustomerDbContext>();
+    dbContext.Database.Migrate();
+}
+
 // Map endpoints
-app.MapRegisterCustomerEndpoint();
-app.MapUpdateCustomerEndpoint();
-app.MapRetrieveCustomerDetailsEndpoint();
-app.MapDeleteCustomerEndpoint();
+EndpointMappings.MapEndpoints(app);
 
 app.Run();

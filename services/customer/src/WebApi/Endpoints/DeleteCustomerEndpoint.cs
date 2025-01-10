@@ -1,21 +1,19 @@
-﻿using Infrastructure.Persistence;
+﻿using Application.Commands.DeleteCustomer;
+using MediatR;
 
 namespace WebApi.Endpoints
 {
     public static class DeleteCustomerEndpoint
     {
-        public static void MapDeleteCustomerEndpoint(this WebApplication app)
+        public static void Map(WebApplication app)
         {
-            app.MapDelete("/customers/{customerId}", async (CustomerDbContext db, int customerId) =>
+            app.MapDelete("/customers/{customerId}", async (IMediator mediator, int customerId) =>
             {
-                var customer = await db.Customers.FindAsync(customerId);
-                if (customer == null)
+                var result = await mediator.Send(new DeleteCustomerCommand(customerId));
+                if (!result)
                 {
                     return Results.NotFound($"Customer with ID {customerId} not found.");
                 }
-
-                db.Customers.Remove(customer);
-                await db.SaveChangesAsync();
 
                 return Results.Ok($"Customer with ID {customerId} has been deleted.");
             });

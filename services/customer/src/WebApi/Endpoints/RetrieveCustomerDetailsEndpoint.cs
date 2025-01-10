@@ -1,14 +1,16 @@
-﻿using Infrastructure.Persistence;
+﻿using Application.Queries.RetrieveCustomer;
+using Infrastructure.Persistence;
+using MediatR;
 
 namespace WebApi.Endpoints
 {
     public static class RetrieveCustomerDetailsEndpoint
     {
-        public static void MapRetrieveCustomerDetailsEndpoint(this WebApplication app)
+        public static void Map(WebApplication app)
         {
-            app.MapGet("/customers/{customerId}", async (CustomerDbContext db, int customerId) =>
+            app.MapGet("/customers/{customerId}", async (IMediator mediator, int customerId) =>
             {
-                var customer = await db.Customers.FindAsync(customerId);
+                var customer = await mediator.Send(new RetrieveCustomerQuery(customerId));
                 if (customer == null)
                 {
                     return Results.NotFound($"Customer with ID {customerId} not found.");

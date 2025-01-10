@@ -8,20 +8,8 @@ using Domain.Models;
 using Infrastructure.Persistence;
 using MediatR;
 
-namespace Application.Handlers
+namespace Application.Commands.updateCustomer
 {
-    public class UpdateCustomerCommand : IRequest<Customer>
-    {
-        public int CustomerId { get; set; }
-        public UpdateCustomerDto CustomerDto { get; set; }
-
-        public UpdateCustomerCommand(int customerId, UpdateCustomerDto customerDto)
-        {
-            CustomerId = customerId;
-            CustomerDto = customerDto;
-        }
-    }
-
     public class UpdateCustomerHandler : IRequestHandler<UpdateCustomerCommand, Customer>
     {
         private readonly CustomerDbContext _dbContext;

@@ -8,18 +8,8 @@ using Domain.Models;
 using Infrastructure.Persistence;
 using MediatR;
 
-namespace Application.Handlers
+namespace Application.Commands.CreateCustomer
 {
-    public class CreateCustomerCommand : IRequest<Customer>
-    {
-        public CreateCustomerDto CustomerDto { get; set; }
-
-        public CreateCustomerCommand(CreateCustomerDto customerDto)
-        {
-            CustomerDto = customerDto;
-        }
-    }
-
     public class CreateCustomerHandler : IRequestHandler<CreateCustomerCommand, Customer>
     {
         private readonly CustomerDbContext _dbContext;
