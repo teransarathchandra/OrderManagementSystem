@@ -19,7 +19,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{2E0FA651
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".http", ".http", "{DC352629-0ADE-4306-97C4-58141A79FCA9}"
 	ProjectSection(SolutionItems) = preProject
-		customer.http = customer.http
+		customer\.http\customer.http = customer\.http\customer.http
 	EndProjectSection
 EndProject
 Global
