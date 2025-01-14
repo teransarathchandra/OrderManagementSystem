@@ -6,14 +6,14 @@ Content-Type: application/json
   "customerId": 1,
   "items": [
     {
-      "productId": 101,
+      "productId": 1,
       "quantity": 2,
-      "price": 19.99
+      "price": 699.99
     },
     {
-      "productId": 102,
+      "productId": 2,
       "quantity": 1,
-      "price": 9.99
+      "price": 999.99
     }
   ],
   "shippingAddress": "123 Main St, Springfield, USA"

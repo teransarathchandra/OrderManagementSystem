@@ -49,10 +49,16 @@ namespace Application.Commands.CreateOrder
             _dbContext.Orders.Add(order);
             await _dbContext.SaveChangesAsync(cancellationToken);
 
-            // Reduce product quantities
             foreach (var item in request.OrderDto.Items)
             {
-                await _catalogService.ReduceProductQuantityAsync(item.ProductId, item.Quantity);
+                try
+                {
+                    await _catalogService.ReduceProductQuantityAsync(item.ProductId, item.Quantity);
+                }
+                catch (InvalidOperationException ex)
+                {
+                    throw new InvalidOperationException($"Error reducing quantity for Product {item.ProductId}: {ex.Message}");
+                }
             }
 
             // Process payment
