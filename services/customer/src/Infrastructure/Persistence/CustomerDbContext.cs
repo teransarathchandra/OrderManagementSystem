@@ -14,6 +14,9 @@ namespace Infrastructure.Persistence
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(CustomerDbContext).Assembly);
+
+            // Seed initial data
+            SeedData.SeedData.Initialize(modelBuilder);
         }
     }
 }

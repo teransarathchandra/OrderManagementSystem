@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(CustomerDbContext))]
-    [Migration("20250110105048_InitialMigration")]
+    [Migration("20250114180657_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -34,7 +34,8 @@ namespace Infrastructure.Migrations
 
                     b.Property<string>("Address")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -49,6 +50,29 @@ namespace Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Customers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Address = "123 Main St, Cityville",
+                            Email = "john.doe@example.com",
+                            Name = "John Doe"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Address = "456 Elm St, Townville",
+                            Email = "jane.smith@example.com",
+                            Name = "Jane Smith"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Address = "789 Oak St, Villageville",
+                            Email = "alice.johnson@example.com",
+                            Name = "Alice Johnson"
+                        });
                 });
 #pragma warning restore 612, 618
         }

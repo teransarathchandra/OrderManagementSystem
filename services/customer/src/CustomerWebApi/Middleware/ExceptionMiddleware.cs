@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 
-namespace OrderWebApi.Middleware
+namespace CustomerWebApi.Middleware
 {
     public class ExceptionMiddleware
     {

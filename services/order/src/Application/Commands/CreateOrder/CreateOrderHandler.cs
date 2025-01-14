@@ -9,13 +9,13 @@ namespace Application.Commands.CreateOrder
     {
         private readonly OrderDbContext _dbContext;
         private readonly CatalogServiceClient _catalogService;
-        private readonly PaymentServiceClient _paymentService;
+        //private readonly PaymentServiceClient _paymentService;
 
         public CreateOrderHandler(OrderDbContext dbContext, CatalogServiceClient catalogService, PaymentServiceClient paymentService)
         {
             _dbContext = dbContext;
             _catalogService = catalogService;
-            _paymentService = paymentService;
+            //_paymentService = paymentService;
         }
 
         public async Task<Order> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
@@ -61,14 +61,14 @@ namespace Application.Commands.CreateOrder
                 }
             }
 
-            // Process payment
-            var paymentSuccessful = await _paymentService.ProcessPaymentAsync(order.Id, order.TotalAmount);
-            if (!paymentSuccessful)
-            {
-                order.Status = "PaymentFailed";
-                await _dbContext.SaveChangesAsync(cancellationToken);
-                throw new InvalidOperationException("Payment failed. Order creation aborted.");
-            }
+            //// Process payment
+            //var paymentSuccessful = await _paymentService.ProcessPaymentAsync(order.Id, order.TotalAmount);
+            //if (!paymentSuccessful)
+            //{
+            //    order.Status = "PaymentFailed";
+            //    await _dbContext.SaveChangesAsync(cancellationToken);
+            //    throw new InvalidOperationException("Payment failed. Order creation aborted.");
+            //}
 
             order.Status = "Confirmed";
             await _dbContext.SaveChangesAsync(cancellationToken);

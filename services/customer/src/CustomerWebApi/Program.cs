@@ -30,6 +30,9 @@ using (var scope = app.Services.CreateScope())
     dbContext.Database.Migrate();
 }
 
+// Add exception handling middleware
+app.UseMiddleware<ExceptionMiddleware>();
+
 // Map endpoints
 EndpointMappings.MapEndpoints(app);
 

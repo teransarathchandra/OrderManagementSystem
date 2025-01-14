@@ -11,6 +11,7 @@ namespace Infrastructure.Configurations
             builder.HasKey(c => c.Id);
             builder.Property(c => c.Name).IsRequired().HasMaxLength(100);
             builder.Property(c => c.Email).IsRequired().HasMaxLength(100);
+            builder.Property(c => c.Address).IsRequired().HasMaxLength(250);
         }
     }
 }

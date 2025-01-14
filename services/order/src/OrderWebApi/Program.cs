@@ -1,6 +1,5 @@
 using Application.Commands.CreateOrder;
 using Application.Validators;
-using CustomerWebApi.Middleware;
 using FluentValidation;
 using Infrastructure.Persistence;
 using Infrastructure.Services;
