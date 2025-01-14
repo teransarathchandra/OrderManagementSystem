@@ -1,0 +1,54 @@
+### Create a New Order
+POST http://localhost:5099/orders
+Content-Type: application/json
+
+{
+  "customerId": 1,
+  "items": [
+    {
+      "productId": 101,
+      "quantity": 2,
+      "price": 19.99
+    },
+    {
+      "productId": 102,
+      "quantity": 1,
+      "price": 9.99
+    }
+  ],
+  "shippingAddress": "123 Main St, Springfield, USA"
+}
+
+### Get an Order by ID
+GET http://localhost:5099/orders/1
+Content-Type: application/json
+
+### Invalid Order Retrieval (Non-existent ID)
+GET http://localhost:5099/orders/999
+Content-Type: application/json
+
+### Test Validation: Create Order with Missing Fields
+POST http://localhost:5099/orders
+Content-Type: application/json
+
+{
+  "customerId": 0,
+  "items": [
+    {
+      "productId": 0,
+      "quantity": -1,
+      "price": -10
+    }
+  ],
+  "shippingAddress": ""
+}
+
+### Test Validation: Create Order with Empty Items
+POST http://localhost:5099/orders
+Content-Type: application/json
+
+{
+  "customerId": 1,
+  "items": [],
+  "shippingAddress": "123 Main St, Springfield, USA"
+}
