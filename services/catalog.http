@@ -5,3 +5,7 @@ Content-Type: application/json
 ### Reduce Product Quantity
 POST http://localhost:5088/catalog/products/1/reduce?quantity=5
 Content-Type: application/json
+
+### Get Product By ID
+GET http://localhost:5088/catalog/products/1
+Content-Type: application/json

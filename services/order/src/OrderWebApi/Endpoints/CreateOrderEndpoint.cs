@@ -1,7 +1,7 @@
 ﻿using Application.Commands.CreateOrder;
 using Application.DTOs;
-using CustomerWebApi.Middleware;
 using MediatR;
+using OrderWebApi.Middleware;
 
 namespace OrderWebApi.Endpoints
 {

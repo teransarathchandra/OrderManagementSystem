@@ -1,4 +1,5 @@
 ﻿using System.Net.Http.Json;
+using Domain.Models;
 
 namespace Infrastructure.Services
 {
@@ -43,6 +44,17 @@ namespace Infrastructure.Services
             }
 
             return true;
+        }
+
+        public async Task<Product> GetProductByIdAsync(int productId)
+        {
+            var response = await _httpClient.GetAsync($"/catalog/products/{productId}");
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new InvalidOperationException($"Failed to fetch details for Product {productId}");
+            }
+
+            return await response.Content.ReadFromJsonAsync<Product>();
         }
     }
 }

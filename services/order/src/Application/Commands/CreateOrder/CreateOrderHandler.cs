@@ -20,27 +20,44 @@ namespace Application.Commands.CreateOrder
 
         public async Task<Order> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
         {
-            // Validate product availability
+            // Fetch prices and validate product availability
+            var orderItems = new List<OrderItem>();
+            decimal totalAmount = 0;
+
             foreach (var item in request.OrderDto.Items)
             {
+                // Validate product availability
                 var isAvailable = await _catalogService.CheckProductAvailabilityAsync(item.ProductId, item.Quantity);
                 if (!isAvailable)
                 {
                     throw new InvalidOperationException($"Product {item.ProductId} is not available in sufficient quantity.");
                 }
+
+                // Fetch product details (including price)
+                var product = await _catalogService.GetProductByIdAsync(item.ProductId);
+                if (product == null)
+                {
+                    throw new InvalidOperationException($"Product {item.ProductId} not found.");
+                }
+
+                // Add item to order
+                var orderItem = new OrderItem
+                {
+                    ProductId = item.ProductId,
+                    Quantity = item.Quantity,
+                    Price = product.Price
+                };
+
+                orderItems.Add(orderItem);
+                totalAmount += orderItem.Quantity * orderItem.Price;
             }
 
             // Create order
             var order = new Order
             {
                 CustomerId = request.OrderDto.CustomerId,
-                Items = request.OrderDto.Items.Select(dto => new OrderItem
-                {
-                    ProductId = dto.ProductId,
-                    Quantity = dto.Quantity,
-                    Price = dto.Price
-                }).ToList(),
-                TotalAmount = request.OrderDto.Items.Sum(i => i.Quantity * i.Price),
+                Items = orderItems,
+                TotalAmount = totalAmount,
                 ShippingAddress = request.OrderDto.ShippingAddress,
                 CreatedAt = DateTime.UtcNow,
                 Status = "Pending"
@@ -49,7 +66,8 @@ namespace Application.Commands.CreateOrder
             _dbContext.Orders.Add(order);
             await _dbContext.SaveChangesAsync(cancellationToken);
 
-            foreach (var item in request.OrderDto.Items)
+            // Reduce product quantities
+            foreach (var item in orderItems)
             {
                 try
                 {
