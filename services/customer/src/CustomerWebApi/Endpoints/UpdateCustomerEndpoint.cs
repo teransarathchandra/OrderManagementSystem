@@ -9,7 +9,7 @@ namespace CustomerWebApi.Endpoints
     {
         public static void Map(WebApplication app)
         {
-            app.MapPut("/customers/{customerId}", async (IMediator mediator, int customerId, UpdateCustomerDto customerDto) =>
+            app.MapPut("/customers/{customerId}", async (IMediator mediator, Guid customerId, UpdateCustomerDto customerDto) =>
             {
                 var result = await mediator.Send(new UpdateCustomerCommand(customerId, customerDto));
                 if (result == null)

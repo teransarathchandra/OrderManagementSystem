@@ -7,7 +7,7 @@ namespace OrderWebApi.Endpoints
     {
         public static void Map(WebApplication app)
         {
-            app.MapGet("/orders/{orderId:int}", async (IMediator mediator, int orderId) =>
+            app.MapGet("/orders/{orderId:int}", async (IMediator mediator, Guid orderId) =>
             {
                 var order = await mediator.Send(new GetOrderQuery(orderId));
                 if (order == null)

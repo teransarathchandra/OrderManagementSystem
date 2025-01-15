@@ -1,13 +1,14 @@
-﻿using MediatR;
+﻿using Domain.Models;
+using MediatR;
 
 namespace Application.Commands.UpdateOrderStatus
 {
     public class UpdateOrderStatusCommand : IRequest<bool>
     {
-        public int OrderId { get; }
-        public string Status { get; }
+        public Guid OrderId { get; }
+        public OrderStatus Status { get; }
 
-        public UpdateOrderStatusCommand(int orderId, string status)
+        public UpdateOrderStatusCommand(Guid orderId, OrderStatus status)
         {
             OrderId = orderId;
             Status = status;

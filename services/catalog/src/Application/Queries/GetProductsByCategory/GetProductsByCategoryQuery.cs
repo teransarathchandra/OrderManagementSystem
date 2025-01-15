@@ -5,9 +5,9 @@ namespace Application.Queries.GetProductsByCategory
 {
     public class GetProductsByCategoryQuery : IRequest<List<Product>>
     {
-        public int CategoryId { get; }
+        public Guid CategoryId { get; }
 
-        public GetProductsByCategoryQuery(int categoryId)
+        public GetProductsByCategoryQuery(Guid categoryId)
         {
             CategoryId = categoryId;
         }

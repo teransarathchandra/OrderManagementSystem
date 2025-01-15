@@ -8,8 +8,8 @@ namespace Application.Validators
         public CreateOrderValidator()
         {
             RuleFor(x => x.CustomerId)
-                .GreaterThan(0)
-                .WithMessage("CustomerId must be greater than 0.");
+                .NotEmpty()
+                .WithMessage("CustomerId must be a valid GUID.");
 
             RuleFor(x => x.Items)
                 .NotEmpty()

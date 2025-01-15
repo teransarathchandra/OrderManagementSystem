@@ -7,7 +7,7 @@ namespace CustomerWebApi.Endpoints
     {
         public static void Map(WebApplication app)
         {
-            app.MapGet("/customers/{customerId}", async (IMediator mediator, int customerId) =>
+            app.MapGet("/customers/{customerId}", async (IMediator mediator, Guid customerId) =>
             {
                 var customer = await mediator.Send(new RetrieveCustomerQuery(customerId));
                 if (customer == null)

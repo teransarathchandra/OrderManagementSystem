@@ -4,10 +4,10 @@ namespace Application.Queries.CheckProductAvailability
 {
     public class CheckProductAvailabilityQuery : IRequest<bool>
     {
-        public int ProductId { get; }
+        public Guid ProductId { get; }
         public int Quantity { get; }
 
-        public CheckProductAvailabilityQuery(int productId, int quantity)
+        public CheckProductAvailabilityQuery(Guid productId, int quantity)
         {
             ProductId = productId;
             Quantity = quantity;

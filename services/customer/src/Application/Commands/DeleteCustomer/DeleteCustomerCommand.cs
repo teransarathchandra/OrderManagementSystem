@@ -4,9 +4,9 @@ namespace Application.Commands.DeleteCustomer
 {
     public class DeleteCustomerCommand : IRequest<bool>
     {
-        public int CustomerId { get; }
+        public Guid CustomerId { get; }
 
-        public DeleteCustomerCommand(int customerId)
+        public DeleteCustomerCommand(Guid customerId)
         {
             CustomerId = customerId;
         }

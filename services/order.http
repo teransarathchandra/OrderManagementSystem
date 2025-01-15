@@ -3,14 +3,14 @@ POST http://localhost:5099/orders
 Content-Type: application/json
 
 {
-  "customerId": 1,
+  "customerId": "a1b2c3d4-e5f6-7a8b-9c0d-e1f2a3b4c5d6",
   "items": [
     {
-      "productId": 1,
+      "productId": "8ffa522c-f63d-46e5-a33c-199d733ce9e9",
       "quantity": 2
     },
     {
-      "productId": 2,
+      "productId": "88195839-6d90-4a13-9d99-435ddd95f9f6",
       "quantity": 1
     }
   ],

@@ -5,9 +5,9 @@ namespace Application.Queries.ListCustomerOrders
 {
     public class ListCustomerOrdersQuery : IRequest<List<Order>>
     {
-        public int CustomerId { get; }
+        public Guid CustomerId { get; }
 
-        public ListCustomerOrdersQuery(int customerId)
+        public ListCustomerOrdersQuery(Guid customerId)
         {
             CustomerId = customerId;
         }

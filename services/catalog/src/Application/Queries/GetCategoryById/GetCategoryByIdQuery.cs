@@ -5,9 +5,9 @@ namespace Application.Queries.GetCategoryById
 {
     public class GetCategoryByIdQuery : IRequest<Category>
     {
-        public int CategoryId { get; }
+        public Guid CategoryId { get; }
 
-        public GetCategoryByIdQuery(int categoryId)
+        public GetCategoryByIdQuery(Guid categoryId)
         {
             CategoryId = categoryId;
         }
