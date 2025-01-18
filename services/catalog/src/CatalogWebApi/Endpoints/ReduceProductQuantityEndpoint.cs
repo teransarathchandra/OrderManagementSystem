@@ -8,7 +8,7 @@ namespace CatalogWebApi.Endpoints
     {
         public static void Map(WebApplication app)
         {
-            app.MapPost("/catalog/products/{productId:int}/reduce", async (IMediator mediator, int productId, [FromQuery] int quantity) =>
+            app.MapPost("/catalog/products/{productId:Guid}/reduce", async (IMediator mediator, Guid productId, [FromQuery] int quantity) =>
             {
                 var result = await mediator.Send(new ReduceProductQuantityCommand(productId, quantity));
                 return result ? Results.Ok("Quantity reduced successfully.") : Results.BadRequest("Failed to reduce product quantity.");

@@ -4,9 +4,9 @@ namespace Application.Commands.CancelOrder
 {
     public class CancelOrderCommand : IRequest<bool>
     {
-        public int OrderId { get; }
+        public Guid OrderId { get; }
 
-        public CancelOrderCommand(int orderId)
+        public CancelOrderCommand(Guid orderId)
         {
             OrderId = orderId;
         }

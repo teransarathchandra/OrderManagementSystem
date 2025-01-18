@@ -7,7 +7,7 @@ namespace CustomerWebApi.Endpoints
     {
         public static void Map(WebApplication app)
         {
-            app.MapDelete("/customers/{customerId}", async (IMediator mediator, int customerId) =>
+            app.MapDelete("/customers/{customerId}", async (IMediator mediator, Guid customerId) =>
             {
                 var result = await mediator.Send(new DeleteCustomerCommand(customerId));
                 if (!result)

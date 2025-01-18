@@ -5,9 +5,9 @@ namespace Application.Queries.RetrieveCustomer
 {
     public class RetrieveCustomerQuery : IRequest<Customer>
     {
-        public int CustomerId { get; }
+        public Guid CustomerId { get; }
 
-        public RetrieveCustomerQuery(int customerId)
+        public RetrieveCustomerQuery(Guid customerId)
         {
             CustomerId = customerId;
         }

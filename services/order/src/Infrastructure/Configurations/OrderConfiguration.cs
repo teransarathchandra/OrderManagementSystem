@@ -21,10 +21,6 @@ namespace Infrastructure.Configurations
             builder.Property(o => o.CustomerId)
                 .IsRequired();
 
-            builder.Property(o => o.TotalAmount)
-                .HasColumnType("decimal(18,2)")
-                .IsRequired();
-
             builder.Property(o => o.ShippingAddress)
                 .HasMaxLength(500)
                 .IsRequired();
@@ -33,9 +29,8 @@ namespace Infrastructure.Configurations
                 .IsRequired();
 
             builder.Property(o => o.Status)
-                .HasMaxLength(50)
-                .IsRequired()
-                .HasDefaultValue("Pending");
+                .HasConversion<int>() // Converts enum to integer
+                .IsRequired();
 
             // Relationships
             builder.HasMany(o => o.Items)

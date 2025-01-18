@@ -5,9 +5,9 @@ namespace Application.Queries.GetProductById
 {
     public class GetProductByIdQuery : IRequest<Product>
     {
-        public int ProductId { get; }
+        public Guid ProductId { get; }
 
-        public GetProductByIdQuery(int productId)
+        public GetProductByIdQuery(Guid productId)
         {
             ProductId = productId;
         }

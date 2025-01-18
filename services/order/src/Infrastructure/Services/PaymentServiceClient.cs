@@ -11,7 +11,7 @@ namespace Infrastructure.Services
             _httpClient = httpClient;
         }
 
-        public async Task<bool> ProcessPaymentAsync(int orderId, decimal amount)
+        public async Task<bool> ProcessPaymentAsync(Guid orderId, decimal amount)
         {
             var response = await _httpClient.PostAsJsonAsync($"/payments/process", new { OrderId = orderId, Amount = amount });
             response.EnsureSuccessStatusCode();
