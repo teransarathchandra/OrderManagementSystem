@@ -22,7 +22,6 @@ namespace Application.Commands.CreateOrder
         {
             // Fetch prices and validate product availability
             var orderItems = new List<OrderItem>();
-            decimal totalAmount = 0;
 
             foreach (var item in request.OrderDto.Items)
             {
@@ -44,12 +43,10 @@ namespace Application.Commands.CreateOrder
                 var orderItem = new OrderItem
                 {
                     ProductId = item.ProductId,
-                    Quantity = item.Quantity,
-                    Price = product.Price
+                    Quantity = item.Quantity
                 };
 
                 orderItems.Add(orderItem);
-                totalAmount += orderItem.Quantity * orderItem.Price;
             }
 
             // Create order
@@ -57,10 +54,9 @@ namespace Application.Commands.CreateOrder
             {
                 CustomerId = request.OrderDto.CustomerId,
                 Items = orderItems,
-                TotalAmount = totalAmount,
                 ShippingAddress = request.OrderDto.ShippingAddress,
                 CreatedAt = DateTime.UtcNow,
-                Status = "Pending"
+                Status = OrderStatus.Pending
             };
 
             _dbContext.Orders.Add(order);
@@ -88,7 +84,7 @@ namespace Application.Commands.CreateOrder
             //    throw new InvalidOperationException("Payment failed. Order creation aborted.");
             //}
 
-            order.Status = "Confirmed";
+            order.Status = OrderStatus.Confirmed;
             await _dbContext.SaveChangesAsync(cancellationToken);
 
             return order;

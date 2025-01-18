@@ -5,9 +5,9 @@ namespace Application.Queries.GetOrder
 {
     public class GetOrderQuery : IRequest<Order>
     {
-        public int OrderId { get; }
+        public Guid OrderId { get; }
 
-        public GetOrderQuery(int orderId)
+        public GetOrderQuery(Guid orderId)
         {
             OrderId = orderId;
         }

@@ -7,7 +7,7 @@ namespace CatalogWebApi.Endpoints
     {
         public static void Map(WebApplication app)
         {
-            app.MapGet("/catalog/products/by-category/{categoryId:int}", async (IMediator mediator, int categoryId) =>
+            app.MapGet("/catalog/products/by-category/{categoryId:Guid}", async (IMediator mediator, Guid categoryId) =>
             {
                 var result = await mediator.Send(new GetProductsByCategoryQuery(categoryId));
                 return result.Any() ? Results.Ok(result) : Results.NotFound($"No products found for category ID {categoryId}.");

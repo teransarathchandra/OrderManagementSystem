@@ -12,7 +12,7 @@ namespace Infrastructure.Services
             _httpClient = httpClient;
         }
 
-        public async Task<bool> CheckProductAvailabilityAsync(int productId, int quantity)
+        public async Task<bool> CheckProductAvailabilityAsync(Guid productId, int quantity)
         {
             var response = await _httpClient.GetAsync($"/catalog/products/{productId}/availability?quantity={quantity}");
             if (!response.IsSuccessStatusCode)
@@ -23,7 +23,7 @@ namespace Infrastructure.Services
             return await response.Content.ReadFromJsonAsync<bool>();
         }
 
-        public async Task<bool> ReduceProductQuantityAsync(int productId, int quantity)
+        public async Task<bool> ReduceProductQuantityAsync(Guid productId, int quantity)
         {
             var response = await _httpClient.PostAsync($"/catalog/products/{productId}/reduce?quantity={quantity}", null);
 
@@ -46,7 +46,7 @@ namespace Infrastructure.Services
             return true;
         }
 
-        public async Task<Product> GetProductByIdAsync(int productId)
+        public async Task<Product> GetProductByIdAsync(Guid productId)
         {
             var response = await _httpClient.GetAsync($"/catalog/products/{productId}");
             if (!response.IsSuccessStatusCode)

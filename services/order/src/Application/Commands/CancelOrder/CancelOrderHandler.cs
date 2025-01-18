@@ -1,4 +1,5 @@
-﻿using Infrastructure.Persistence;
+﻿using Domain.Models;
+using Infrastructure.Persistence;
 using MediatR;
 
 namespace Application.Commands.CancelOrder
@@ -21,7 +22,7 @@ namespace Application.Commands.CancelOrder
                 return false;
             }
 
-            order.Status = "Canceled";
+            order.Status = OrderStatus.Canceled;
             await _dbContext.SaveChangesAsync(cancellationToken);
 
             return true;
