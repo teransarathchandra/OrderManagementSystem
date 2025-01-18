@@ -28,7 +28,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{D5C69123-B61
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".http", ".http", "{5A6BFE4E-5122-4FE6-8E10-42406BC0EB9E}"
 	ProjectSection(SolutionItems) = preProject
-		order.http = order.http
+		order\.http\order.http = order\.http\order.http
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{734609DA-9039-425D-9D32-A53C0527909A}"
@@ -45,7 +45,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "catalog", "catalog", "{BC90
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".http", ".http", "{9B758F74-366C-4EA5-ADAE-1D06DCBAECDC}"
 	ProjectSection(SolutionItems) = preProject
-		catalog.http = catalog.http
+		catalog\.http\catalog.http = catalog\.http\catalog.http
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B642E686-EE7F-4EB7-9F51-264E047EF4AB}"
