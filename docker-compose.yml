@@ -1,0 +1,62 @@
+version: '3.8'
+
+services:
+  catalog-service:
+    build:
+      context: .
+      dockerfile: services/catalog/src/CatalogWebApi/Dockerfile
+    container_name: catalog-service
+    ports:
+      - "5001:8080" # Map host port 5001 to container port 8080
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=sqlserver-container,1433;Database=CatalogDb;User ID=sa;Password=password1234;TrustServerCertificate=True
+    depends_on:
+      - sqlserver-container
+    networks:
+      - app-network
+
+  customer-service:
+    build:
+      context: .
+      dockerfile: services/customer/src/CustomerWebApi/Dockerfile
+    container_name: customer-service
+    ports:
+      - "5002:8080" # Map host port 5002 to container port 8080
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=sqlserver-container,1433;Database=CustomerDb;User ID=sa;Password=password1234;TrustServerCertificate=True
+    depends_on:
+      - sqlserver-container
+    networks:
+      - app-network
+
+  order-service:
+    build:
+      context: .
+      dockerfile: services/order/src/OrderWebApi/Dockerfile
+    container_name: order-service
+    ports:
+      - "5003:8080" # Map host port 5003 to container port 8080
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=Server=sqlserver-container,1433;Database=OrderDb;User ID=sa;Password=password1234;TrustServerCertificate=True
+    depends_on:
+      - sqlserver-container
+    networks:
+      - app-network
+
+  sqlserver-container:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: sqlserver-container
+    ports:
+      - "1433:1433"
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=password1234
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
