@@ -1,14 +1,17 @@
 ﻿using System.Text.Json;
+using Serilog;
 
 namespace OrderWebApi.Middleware
 {
     public class ExceptionMiddleware
     {
         private readonly RequestDelegate _next;
+        private readonly IWebHostEnvironment _env;
 
-        public ExceptionMiddleware(RequestDelegate next)
+        public ExceptionMiddleware(RequestDelegate next, IWebHostEnvironment env)
         {
             _next = next;
+            _env = env;
         }
 
         public async Task InvokeAsync(HttpContext context)
@@ -23,10 +26,10 @@ namespace OrderWebApi.Middleware
             }
         }
 
-        private static Task HandleExceptionAsync(HttpContext context, Exception exception)
+        private Task HandleExceptionAsync(HttpContext context, Exception exception)
         {
-            // Log the exception details (optional: use a logging library like Serilog)
-            Console.WriteLine($"Error: {exception.Message}");
+            // Log the exception details using Serilog
+            Log.Error(exception, "Unhandled exception occurred.");
 
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = StatusCodes.Status500InternalServerError;
@@ -34,7 +37,7 @@ namespace OrderWebApi.Middleware
             var errorResponse = new
             {
                 Error = "An error occurred while processing your request.",
-                Details = exception.Message // Omit this for production to avoid exposing sensitive details
+                Details = _env.IsDevelopment() ? exception.Message : null
             };
 
             return context.Response.WriteAsync(JsonSerializer.Serialize(errorResponse));
