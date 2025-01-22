@@ -4,6 +4,7 @@ using CatalogWebApi.Middleware;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,6 +32,17 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
+// Configure Serilog
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .Enrich.WithEnvironmentName()
+    .Enrich.WithThreadId()
+    .WriteTo.Console()
+    .WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day)
+    .CreateLogger();
+
+builder.Host.UseSerilog();
+
 var app = builder.Build();
 
 // Apply migrations and update the database
@@ -42,6 +54,9 @@ using (var scope = app.Services.CreateScope())
 
 // Add exception handling middleware
 app.UseMiddleware<ExceptionMiddleware>();
+
+// Log HTTP requests
+app.UseSerilogRequestLogging();
 
 // Enable Swagger middleware
 if (app.Environment.IsDevelopment())
