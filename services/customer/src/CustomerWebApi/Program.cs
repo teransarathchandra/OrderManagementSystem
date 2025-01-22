@@ -5,6 +5,7 @@ using CustomerWebApi.Middleware;
 using FluentValidation;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +18,23 @@ builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Creat
 
 // Register FluentValidation Validators
 builder.Services.AddValidatorsFromAssemblyContaining<CreateCustomerValidator>();
+
+// Add Swagger
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "Customer API",
+        Version = "v1",
+        Description = "API for managing customers",
+        Contact = new OpenApiContact
+        {
+            Name = "Teran Sarathchandra",
+            Email = "teran8777@gmail.com"
+        }
+    });
+});
 
 var app = builder.Build();
 
@@ -32,6 +50,17 @@ using (var scope = app.Services.CreateScope())
 
 // Add exception handling middleware
 app.UseMiddleware<ExceptionMiddleware>();
+
+// Enable Swagger middleware
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "Customer API V1");
+        options.RoutePrefix = string.Empty;
+    });
+}
 
 // Map endpoints
 EndpointMappings.MapEndpoints(app);

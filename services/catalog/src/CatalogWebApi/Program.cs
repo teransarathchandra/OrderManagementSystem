@@ -3,6 +3,7 @@ using CatalogWebApi.Endpoints;
 using CatalogWebApi.Middleware;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,23 @@ builder.Services.AddDbContext<CatalogDbContext>(options =>
 
 // Register MediatR
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetProductByIdHandler).Assembly));
+
+// Add Swagger
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Title = "Catalog API",
+        Version = "v1",
+        Description = "API for managing product catalog",
+        Contact = new OpenApiContact
+        {
+            Name = "Teran Sarathchandra",
+            Email = "teran8777@gmail.com"
+        }
+    });
+});
 
 var app = builder.Build();
 
@@ -24,6 +42,17 @@ using (var scope = app.Services.CreateScope())
 
 // Add exception handling middleware
 app.UseMiddleware<ExceptionMiddleware>();
+
+// Enable Swagger middleware
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "Catalog API V1");
+        options.RoutePrefix = string.Empty;
+    });
+}
 
 // Map endpoints
 EndpointMappings.MapEndpoints(app);
