@@ -16,12 +16,14 @@ COPY services/catalog/src/CatalogWebApi/CatalogWebApi.csproj CatalogWebApi/
 COPY services/catalog/src/Application/Application.csproj Application/
 COPY services/catalog/src/Infrastructure/Infrastructure.csproj Infrastructure/
 COPY services/catalog/src/Domain/Domain.csproj Domain/
+COPY services/shared/Shared.csproj ../shared/
 
 # Restore dependencies
 RUN dotnet restore "CatalogWebApi/CatalogWebApi.csproj"
 
 # Copy the entire solution
 COPY services/catalog/src/ /src/
+COPY services/shared/ ../shared/
 
 # Build the application
 WORKDIR /src/CatalogWebApi

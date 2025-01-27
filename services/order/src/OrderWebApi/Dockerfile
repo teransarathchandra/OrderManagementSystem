@@ -11,17 +11,19 @@ RUN apt-get update && apt-get install -y libgssapi-krb5-2 && rm -rf /var/lib/apt
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
 
-# Copy .csproj files for all projects
+# Copy .csproj files for all projects, including Shared
 COPY services/order/src/OrderWebApi/OrderWebApi.csproj OrderWebApi/
 COPY services/order/src/Application/Application.csproj Application/
 COPY services/order/src/Infrastructure/Infrastructure.csproj Infrastructure/
 COPY services/order/src/Domain/Domain.csproj Domain/
+COPY services/shared/Shared.csproj ../shared/
 
 # Restore dependencies
 RUN dotnet restore "OrderWebApi/OrderWebApi.csproj"
 
 # Copy the entire solution
 COPY services/order/src/ /src/
+COPY services/shared/ ../shared/
 
 # Build the application
 WORKDIR /src/OrderWebApi
