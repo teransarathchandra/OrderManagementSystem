@@ -5,6 +5,7 @@ using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Serilog;
+using Shared.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -37,11 +38,15 @@ Log.Logger = new LoggerConfiguration()
     .ReadFrom.Configuration(builder.Configuration)
     .Enrich.WithEnvironmentName()
     .Enrich.WithThreadId()
+    .Enrich.FromLogContext()
     .WriteTo.Console()
     .WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day)
     .CreateLogger();
 
 builder.Host.UseSerilog();
+
+// Add OpenTelemetry
+builder.Services.AddCustomOpenTelemetry("CatalogWebApi", builder.Configuration);
 
 var app = builder.Build();
 

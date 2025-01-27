@@ -7,6 +7,7 @@ using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Serilog;
+using Shared.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,11 +43,14 @@ Log.Logger = new LoggerConfiguration()
     .ReadFrom.Configuration(builder.Configuration)
     .Enrich.WithEnvironmentName()
     .Enrich.WithThreadId()
+    .Enrich.FromLogContext()
     .WriteTo.Console()
     .WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day)
     .CreateLogger();
 
 builder.Host.UseSerilog();
+
+builder.Services.AddCustomOpenTelemetry("CustomerWebApi", builder.Configuration);
 
 var app = builder.Build();
 
@@ -65,6 +69,9 @@ app.UseMiddleware<ExceptionMiddleware>();
 
 // Log HTTP requests
 app.UseSerilogRequestLogging();
+
+// Expose Prometheus metrics endpoint
+app.UseOpenTelemetryPrometheusScrapingEndpoint();
 
 // Enable Swagger middleware
 if (app.Environment.IsDevelopment())

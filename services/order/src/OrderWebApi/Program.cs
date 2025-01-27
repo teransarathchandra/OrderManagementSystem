@@ -8,6 +8,7 @@ using Microsoft.OpenApi.Models;
 using OrderWebApi.Endpoints;
 using OrderWebApi.Middleware;
 using Serilog;
+using Shared.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -53,19 +54,19 @@ Log.Logger = new LoggerConfiguration()
     .ReadFrom.Configuration(builder.Configuration)
     .Enrich.WithEnvironmentName()
     .Enrich.WithThreadId()
+    .Enrich.FromLogContext()
     .WriteTo.Console()
     .WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day)
     .CreateLogger();
 
 builder.Host.UseSerilog();
 
+builder.Services.AddCustomOpenTelemetry("OrderWebApi", builder.Configuration);
+
 var app = builder.Build();
 
 // Add Validation Middleware
 app.UseMiddleware<ValidationMiddleware>();
-
-// Log HTTP requests
-app.UseSerilogRequestLogging();
 
 // Apply migrations and update the database
 using (var scope = app.Services.CreateScope())
@@ -76,6 +77,12 @@ using (var scope = app.Services.CreateScope())
 
 // Add exception handling middleware
 app.UseMiddleware<ExceptionMiddleware>();
+
+// Log HTTP requests
+app.UseSerilogRequestLogging();
+
+// Expose Prometheus metrics endpoint
+app.UseOpenTelemetryPrometheusScrapingEndpoint();
 
 // Enable Swagger middleware
 if (app.Environment.IsDevelopment())

@@ -16,12 +16,14 @@ COPY services/customer/src/CustomerWebApi/CustomerWebApi.csproj CustomerWebApi/
 COPY services/customer/src/Application/Application.csproj Application/
 COPY services/customer/src/Infrastructure/Infrastructure.csproj Infrastructure/
 COPY services/customer/src/Domain/Domain.csproj Domain/
+COPY services/shared/Shared.csproj ../shared/
 
 # Restore dependencies
 RUN dotnet restore "CustomerWebApi/CustomerWebApi.csproj"
 
 # Copy the entire solution
 COPY services/customer/src/ /src/
+COPY services/shared/ ../shared/
 
 # Build the application
 WORKDIR /src/CustomerWebApi
