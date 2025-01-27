@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using OrderWebApi.Endpoints;
 using OrderWebApi.Middleware;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -47,10 +48,24 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
+// Configure Serilog
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .Enrich.WithEnvironmentName()
+    .Enrich.WithThreadId()
+    .WriteTo.Console()
+    .WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day)
+    .CreateLogger();
+
+builder.Host.UseSerilog();
+
 var app = builder.Build();
 
 // Add Validation Middleware
 app.UseMiddleware<ValidationMiddleware>();
+
+// Log HTTP requests
+app.UseSerilogRequestLogging();
 
 // Apply migrations and update the database
 using (var scope = app.Services.CreateScope())
