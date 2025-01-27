@@ -63,6 +63,9 @@ app.UseMiddleware<ExceptionMiddleware>();
 // Log HTTP requests
 app.UseSerilogRequestLogging();
 
+// Expose Prometheus metrics endpoint
+app.UseOpenTelemetryPrometheusScrapingEndpoint();
+
 // Enable Swagger middleware
 if (app.Environment.IsDevelopment())
 {
