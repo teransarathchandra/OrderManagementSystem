@@ -3,7 +3,7 @@ using FluentValidation;
 
 namespace Application.Validators
 {
-    public class OrderItemValidator : AbstractValidator<OrderItemDto>
+    internal sealed class OrderItemValidator : AbstractValidator<OrderItemDto>
     {
         public OrderItemValidator()
         {
