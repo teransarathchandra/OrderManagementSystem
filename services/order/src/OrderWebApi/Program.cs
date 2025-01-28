@@ -1,5 +1,5 @@
+using System.Reflection;
 using Application.Commands.CreateOrder;
-using Application.Validators;
 using FluentValidation;
 using Infrastructure.Persistence;
 using Infrastructure.Services;
@@ -20,7 +20,7 @@ builder.Services.AddDbContext<OrderDbContext>(options =>
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateOrderHandler).Assembly));
 
 // Register FluentValidation Validators
-builder.Services.AddValidatorsFromAssemblyContaining<CreateOrderValidator>();
+builder.Services.AddValidatorsFromAssembly(Assembly.Load("Application"), includeInternalTypes: true);
 
 builder.Services.AddHttpClient<CatalogServiceClient>(client =>
 {
