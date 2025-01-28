@@ -1,5 +1,5 @@
+using System.Reflection;
 using Application.Commands.CreateCustomer;
-using Application.Validators;
 using CustomerWebApi.Endpoints;
 using CustomerWebApi.Middleware;
 using FluentValidation;
@@ -19,7 +19,7 @@ builder.Services.AddDbContext<CustomerDbContext>(options =>
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateCustomerHandler).Assembly));
 
 // Register FluentValidation Validators
-builder.Services.AddValidatorsFromAssemblyContaining<CreateCustomerValidator>();
+builder.Services.AddValidatorsFromAssembly(Assembly.Load("Application"), includeInternalTypes: true);
 
 // Add Swagger
 builder.Services.AddEndpointsApiExplorer();

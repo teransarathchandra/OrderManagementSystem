@@ -3,7 +3,7 @@ using FluentValidation;
 
 namespace Application.Validators
 {
-    public class UpdateCustomerValidator : AbstractValidator<UpdateCustomerDto>
+    internal sealed class UpdateCustomerValidator : AbstractValidator<UpdateCustomerDto>
     {
         public UpdateCustomerValidator()
         {
