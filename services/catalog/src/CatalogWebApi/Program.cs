@@ -1,4 +1,4 @@
-using Application.Queries.GetProductById;
+using System.Reflection;
 using CatalogWebApi.Endpoints;
 using CatalogWebApi.Middleware;
 using Infrastructure.Persistence;
@@ -14,7 +14,7 @@ builder.Services.AddDbContext<CatalogDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Register MediatR
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(GetProductByIdHandler).Assembly));
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.Load("Application")));
 
 // Add Swagger
 builder.Services.AddEndpointsApiExplorer();
