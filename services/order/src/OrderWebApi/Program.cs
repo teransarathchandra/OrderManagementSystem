@@ -5,9 +5,9 @@ using Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using OrderWebApi.Endpoints;
-using OrderWebApi.Middleware;
 using Serilog;
 using Shared.Extensions;
+using Shared.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
