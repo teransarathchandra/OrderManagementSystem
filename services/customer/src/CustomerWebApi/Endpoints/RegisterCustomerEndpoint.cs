@@ -1,7 +1,7 @@
 ﻿using Application.Commands.CreateCustomer;
 using Application.DTOs;
-using CustomerWebApi.Middleware;
 using MediatR;
+using Shared.Middleware;
 
 namespace CustomerWebApi.Endpoints
 {

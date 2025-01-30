@@ -1,12 +1,12 @@
 using System.Reflection;
 using CustomerWebApi.Endpoints;
-using CustomerWebApi.Middleware;
 using FluentValidation;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Serilog;
 using Shared.Extensions;
+using Shared.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 

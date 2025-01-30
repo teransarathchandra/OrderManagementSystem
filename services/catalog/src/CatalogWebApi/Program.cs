@@ -1,11 +1,11 @@
 using System.Reflection;
 using CatalogWebApi.Endpoints;
-using CatalogWebApi.Middleware;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Serilog;
 using Shared.Extensions;
+using Shared.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
