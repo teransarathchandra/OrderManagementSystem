@@ -1,5 +1,4 @@
 using System.Reflection;
-using Application.Commands.CreateCustomer;
 using CustomerWebApi.Endpoints;
 using CustomerWebApi.Middleware;
 using FluentValidation;
@@ -16,7 +15,7 @@ builder.Services.AddDbContext<CustomerDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Register MediatR
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateCustomerHandler).Assembly));
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.Load("Application")));
 
 // Register FluentValidation Validators
 builder.Services.AddValidatorsFromAssembly(Assembly.Load("Application"), includeInternalTypes: true);

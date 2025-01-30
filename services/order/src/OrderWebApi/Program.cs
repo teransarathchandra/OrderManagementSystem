@@ -1,5 +1,4 @@
 using System.Reflection;
-using Application.Commands.CreateOrder;
 using FluentValidation;
 using Infrastructure.Persistence;
 using Infrastructure.Services;
@@ -17,7 +16,7 @@ builder.Services.AddDbContext<OrderDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Register MediatR
-builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(CreateOrderHandler).Assembly));
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.Load("Application")));
 
 // Register FluentValidation Validators
 builder.Services.AddValidatorsFromAssembly(Assembly.Load("Application"), includeInternalTypes: true);
