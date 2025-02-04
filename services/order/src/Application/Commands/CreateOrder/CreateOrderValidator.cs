@@ -1,7 +1,6 @@
-﻿using Application.DTOs;
-using FluentValidation;
+﻿using FluentValidation;
 
-namespace Application.Validators
+namespace Application.Commands.CreateOrder
 {
     internal sealed class CreateOrderValidator : AbstractValidator<CreateOrderDto>
     {

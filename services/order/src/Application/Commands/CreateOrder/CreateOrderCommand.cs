@@ -1,5 +1,4 @@
-﻿using Application.DTOs;
-using Domain.Models;
+﻿using Domain.Models;
 using MediatR;
 
 namespace Application.Commands.CreateOrder

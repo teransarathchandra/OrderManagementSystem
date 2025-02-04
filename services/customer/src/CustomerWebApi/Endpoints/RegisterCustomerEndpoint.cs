@@ -1,5 +1,4 @@
 ﻿using Application.Commands.CreateCustomer;
-using Application.DTOs;
 using MediatR;
 using Shared.Middleware;
 
