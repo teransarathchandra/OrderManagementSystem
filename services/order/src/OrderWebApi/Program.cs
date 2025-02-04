@@ -4,12 +4,50 @@ using Infrastructure.Persistence;
 using Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
+using OpenTelemetry.Logs;
+using OpenTelemetry.Resources;
 using OrderWebApi.Endpoints;
 using Serilog;
 using Shared.Extensions;
 using Shared.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Configure Serilog
+Log.Logger = new LoggerConfiguration()
+    .ReadFrom.Configuration(builder.Configuration)
+    .Enrich.WithEnvironmentName()
+    .Enrich.WithThreadId()
+    .Enrich.FromLogContext()
+    .WriteTo.Console()
+    .WriteTo.OpenTelemetry(options =>
+    {
+        options.Endpoint = builder.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"] ?? "http://aspire-dashboard:18889";
+    })
+    //.WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day)
+    .CreateLogger();
+
+builder.Host.UseSerilog();
+
+// Add Logging with OpenTelemetry
+builder.Logging.AddOpenTelemetry(logging =>
+{
+    logging.IncludeFormattedMessage = true; // Ensures logs have formatted messages
+    logging.IncludeScopes = true; // Enables structured logging with scopes
+    logging.ParseStateValues = true; // Ensures additional attributes are included in logs
+
+    //Add ResourceBuilder with the same service name
+    logging.SetResourceBuilder(
+        ResourceBuilder
+            .CreateDefault()
+            .AddService(
+                serviceName: "OrderWebApi",
+                serviceVersion: "1.0.0"
+            )
+    );
+
+    logging.AddOtlpExporter(); // Sends logs to Aspire Dashboard (port 18889)
+});
 
 // Add DbContext
 builder.Services.AddDbContext<OrderDbContext>(options =>
@@ -31,6 +69,9 @@ builder.Services.AddHttpClient<PaymentServiceClient>(client =>
     client.BaseAddress = new Uri(builder.Configuration["PaymentService:BaseUrl"]);
 });
 
+// Add OpenTelemetry (Shared)
+builder.Services.AddCustomOpenTelemetry("OrderWebApi", builder.Configuration);
+
 // Add Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
@@ -48,20 +89,6 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
-// Configure Serilog
-Log.Logger = new LoggerConfiguration()
-    .ReadFrom.Configuration(builder.Configuration)
-    .Enrich.WithEnvironmentName()
-    .Enrich.WithThreadId()
-    .Enrich.FromLogContext()
-    .WriteTo.Console()
-    .WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day)
-    .CreateLogger();
-
-builder.Host.UseSerilog();
-
-builder.Services.AddCustomOpenTelemetry("OrderWebApi", builder.Configuration);
-
 var app = builder.Build();
 
 // Add Validation Middleware
@@ -73,15 +100,11 @@ using (var scope = app.Services.CreateScope())
     var dbContext = scope.ServiceProvider.GetRequiredService<OrderDbContext>();
     dbContext.Database.Migrate();
 }
-
-// Add exception handling middleware
-app.UseMiddleware<ExceptionMiddleware>();
-
 // Log HTTP requests
 app.UseSerilogRequestLogging();
 
-// Expose Prometheus metrics endpoint
-app.UseOpenTelemetryPrometheusScrapingEndpoint();
+// Add exception handling middleware
+app.UseMiddleware<ExceptionMiddleware>();
 
 // Enable Swagger middleware
 if (app.Environment.IsDevelopment())
