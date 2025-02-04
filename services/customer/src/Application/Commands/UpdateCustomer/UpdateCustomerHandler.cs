@@ -2,7 +2,7 @@
 using Infrastructure.Persistence;
 using MediatR;
 
-namespace Application.Commands.updateCustomer
+namespace Application.Commands.UpdateCustomer
 {
     public class UpdateCustomerHandler : IRequestHandler<UpdateCustomerCommand, Customer>
     {

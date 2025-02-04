@@ -1,8 +1,7 @@
-﻿using Application.DTOs;
-using Domain.Models;
+﻿using Domain.Models;
 using MediatR;
 
-namespace Application.Commands.updateCustomer
+namespace Application.Commands.UpdateCustomer
 {
     public class UpdateCustomerCommand : IRequest<Customer>
     {

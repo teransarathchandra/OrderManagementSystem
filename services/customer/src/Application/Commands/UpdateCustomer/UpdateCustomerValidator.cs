@@ -1,11 +1,10 @@
-﻿using Application.DTOs;
-using FluentValidation;
+﻿using FluentValidation;
 
-namespace Application.Validators
+namespace Application.Commands.UpdateCustomer
 {
-    internal sealed class CreateCustomerValidator : AbstractValidator<CreateCustomerDto>
+    internal sealed class UpdateCustomerValidator : AbstractValidator<UpdateCustomerDto>
     {
-        public CreateCustomerValidator()
+        public UpdateCustomerValidator()
         {
             RuleFor(c => c.Name)
                 .NotEmpty().WithMessage("Name is required")
