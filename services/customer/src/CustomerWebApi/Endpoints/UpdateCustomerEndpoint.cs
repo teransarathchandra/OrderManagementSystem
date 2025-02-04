@@ -1,7 +1,6 @@
-﻿using Application.Commands.updateCustomer;
-using Application.DTOs;
-using CustomerWebApi.Middleware;
+﻿using Application.Commands.UpdateCustomer;
 using MediatR;
+using Shared.Middleware;
 
 namespace CustomerWebApi.Endpoints
 {

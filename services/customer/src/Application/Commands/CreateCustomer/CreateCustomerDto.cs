@@ -1,4 +1,4 @@
-﻿namespace Application.DTOs
+﻿namespace Application.Commands.CreateCustomer
 {
     public class CreateCustomerDto
     {

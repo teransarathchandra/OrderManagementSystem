@@ -10,33 +10,42 @@ namespace Shared.Extensions
     {
         public static IServiceCollection AddCustomOpenTelemetry(this IServiceCollection services, string serviceName, IConfiguration configuration)
         {
+            var otelExporterEndpoint = configuration["OTEL_EXPORTER_OTLP_ENDPOINT"] ?? "http://aspire-dashboard:18889";
+
             services.AddOpenTelemetry()
-                .WithTracing(tracerProviderBuilder =>
+                .ConfigureResource(resource =>
                 {
-                    tracerProviderBuilder
-                        .SetResourceBuilder(ResourceBuilder.CreateDefault()
-                            .AddService(serviceName)
-                            .AddAttributes(new Dictionary<string, object>
-                            {
-                                ["environment"] = configuration["ASPNETCORE_ENVIRONMENT"],
-                                ["region"] = "us-east-1"
-                            }))
+                    resource.AddService(serviceName);
+                    resource.AddTelemetrySdk();
+                    resource.AddAttributes(new Dictionary<string, object>
+                    {
+                        ["deployment.environment"] = configuration["ASPNETCORE_ENVIRONMENT"] ?? "Production",
+                        ["service.name"] = serviceName,
+                        ["service.version"] = "1.0.0"
+                    });
+                })
+                .WithMetrics(metrics =>
+                {
+                    metrics
+                        .AddAspNetCoreInstrumentation()
+                        .AddHttpClientInstrumentation()
+                        .AddRuntimeInstrumentation()
+                        .AddProcessInstrumentation();
+
+                    metrics.AddOtlpExporter(options => options.Endpoint = new Uri(otelExporterEndpoint));
+                })
+                .WithTracing(tracing =>
+                {
+                    tracing
                         .AddAspNetCoreInstrumentation(options =>
                         {
                             options.RecordException = true;
                         })
                         .AddHttpClientInstrumentation()
-                        .AddJaegerExporter(jaegerOptions =>
-                        {
-                            jaegerOptions.AgentHost = configuration["Jaeger:Host"] ?? "localhost";
-                            jaegerOptions.AgentPort = int.Parse(configuration["Jaeger:Port"] ?? "6831");
-                        });
-                })
-                .WithMetrics(metricsProviderBuilder =>
-                {
-                    metricsProviderBuilder
-                        .AddAspNetCoreInstrumentation()
-                        .AddPrometheusExporter();
+                        .AddEntityFrameworkCoreInstrumentation()
+                        .AddSource(serviceName);
+
+                    tracing.AddOtlpExporter(options => options.Endpoint = new Uri(otelExporterEndpoint));
                 });
 
             return services;

@@ -1,7 +1,8 @@
-﻿using System.Text.Json;
-using FluentValidation;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Http;
+using System.Text.Json;
 
-namespace OrderWebApi.Middleware
+namespace Shared.Middleware
 {
     public class ValidationMiddleware
     {
