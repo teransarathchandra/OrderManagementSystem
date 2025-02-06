@@ -2,9 +2,6 @@ using System.Reflection;
 using CatalogWebApi.Endpoints;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
-using OpenTelemetry.Logs;
-using OpenTelemetry.Resources;
 using Serilog;
 using Shared.Extensions;
 using Shared.Middleware;
@@ -12,40 +9,10 @@ using Shared.Middleware;
 var builder = WebApplication.CreateBuilder(args);
 
 // Configure Serilog
-Log.Logger = new LoggerConfiguration()
-    .ReadFrom.Configuration(builder.Configuration)
-    .Enrich.WithEnvironmentName()
-    .Enrich.WithThreadId()
-    .Enrich.FromLogContext()
-    .WriteTo.Console()
-    .WriteTo.OpenTelemetry(options =>
-    {
-        options.Endpoint = builder.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"] ?? "http://aspire-dashboard:18889";
-    })
-    //.WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day)
-    .CreateLogger();
+builder.ConfigureSerilog();
 
-builder.Host.UseSerilog();
-
-//// Add Logging with OpenTelemetry
-builder.Logging.AddOpenTelemetry(logging =>
-{
-    logging.IncludeFormattedMessage = true; // Ensures logs have formatted messages
-    logging.IncludeScopes = true; // Enables structured logging with scopes
-    logging.ParseStateValues = true; // Ensures additional attributes are included in logs
-
-    //Add ResourceBuilder with the same service name
-    logging.SetResourceBuilder(
-        ResourceBuilder
-            .CreateDefault()
-            .AddService(
-                serviceName: "CatalogWebApi",
-                serviceVersion: "1.0.0"
-            )
-    );
-
-    logging.AddOtlpExporter(); // Sends logs to Aspire Dashboard (port 18889)
-});
+// Add Logging with OpenTelemetry
+builder.Logging.AddCustomLogging("CatalogWebApi");
 
 // Add DbContext
 builder.Services.AddDbContext<CatalogDbContext>(options =>
@@ -58,33 +25,7 @@ builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.Loa
 builder.Services.AddCustomOpenTelemetry("CatalogWebApi", builder.Configuration);
 
 // Add Swagger
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(options =>
-{
-    options.SwaggerDoc("v1", new OpenApiInfo
-    {
-        Title = "Catalog API",
-        Version = "v1",
-        Description = "API for managing product catalog",
-        Contact = new OpenApiContact
-        {
-            Name = "Teran Sarathchandra",
-            Email = "teran8777@gmail.com"
-        }
-    });
-});
-
-//// Configure Serilog
-//Log.Logger = new LoggerConfiguration()
-//    .ReadFrom.Configuration(builder.Configuration)
-//    .Enrich.WithEnvironmentName()
-//    .Enrich.WithThreadId()
-//    .Enrich.FromLogContext()
-//    .WriteTo.Console()
-//    .WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day)
-//    .CreateLogger();
-
-//builder.Host.UseSerilog();
+builder.Services.AddCustomSwagger("Catalog API");
 
 var app = builder.Build();
 
@@ -98,19 +39,11 @@ using (var scope = app.Services.CreateScope())
 // Log HTTP requests
 app.UseSerilogRequestLogging();
 
-// Add exception handling middleware
-app.UseMiddleware<ExceptionMiddleware>();
+// Add Global Middleware
+app.UseGlobalMiddlewares();
 
 // Enable Swagger middleware
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI(options =>
-    {
-        options.SwaggerEndpoint("/swagger/v1/swagger.json", "Catalog API V1");
-        options.RoutePrefix = string.Empty;
-    });
-}
+app.UseCustomSwagger("Catalog API");
 
 // Map endpoints
 EndpointMappings.MapEndpoints(app);

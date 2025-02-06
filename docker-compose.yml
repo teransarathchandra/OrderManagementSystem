@@ -10,6 +10,8 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://aspire-dashboard:18889
       - ConnectionStrings__DefaultConnection=Server=sqlserver-container,1433;Database=CatalogDb;User ID=sa;Password=P@ssw0rd2025;TrustServerCertificate=True
+      - DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
+      - LANG=en_US.UTF-8
     depends_on:
       - sqlserver-container
     networks:
@@ -26,6 +28,8 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://aspire-dashboard:18889
       - ConnectionStrings__DefaultConnection=Server=sqlserver-container,1433;Database=CustomerDb;User ID=sa;Password=P@ssw0rd2025;TrustServerCertificate=True
+      - DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
+      - LANG=en_US.UTF-8
     depends_on:
       - sqlserver-container
     networks:
@@ -42,6 +46,8 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - OTEL_EXPORTER_OTLP_ENDPOINT=http://aspire-dashboard:18889
       - ConnectionStrings__DefaultConnection=Server=sqlserver-container,1433;Database=OrderDb;User ID=sa;Password=P@ssw0rd2025;TrustServerCertificate=True
+      - DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
+      - LANG=en_US.UTF-8
     depends_on:
       - sqlserver-container
     networks:

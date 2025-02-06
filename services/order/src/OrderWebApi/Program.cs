@@ -1,11 +1,7 @@
 using System.Reflection;
 using FluentValidation;
 using Infrastructure.Persistence;
-using Infrastructure.Services;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.OpenApi.Models;
-using OpenTelemetry.Logs;
-using OpenTelemetry.Resources;
 using OrderWebApi.Endpoints;
 using Serilog;
 using Shared.Extensions;
@@ -14,44 +10,17 @@ using Shared.Middleware;
 var builder = WebApplication.CreateBuilder(args);
 
 // Configure Serilog
-Log.Logger = new LoggerConfiguration()
-    .ReadFrom.Configuration(builder.Configuration)
-    .Enrich.WithEnvironmentName()
-    .Enrich.WithThreadId()
-    .Enrich.FromLogContext()
-    .WriteTo.Console()
-    .WriteTo.OpenTelemetry(options =>
-    {
-        options.Endpoint = builder.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"] ?? "http://aspire-dashboard:18889";
-    })
-    //.WriteTo.File("logs/log-.txt", rollingInterval: RollingInterval.Day)
-    .CreateLogger();
-
-builder.Host.UseSerilog();
+builder.ConfigureSerilog();
 
 // Add Logging with OpenTelemetry
-builder.Logging.AddOpenTelemetry(logging =>
-{
-    logging.IncludeFormattedMessage = true; // Ensures logs have formatted messages
-    logging.IncludeScopes = true; // Enables structured logging with scopes
-    logging.ParseStateValues = true; // Ensures additional attributes are included in logs
-
-    //Add ResourceBuilder with the same service name
-    logging.SetResourceBuilder(
-        ResourceBuilder
-            .CreateDefault()
-            .AddService(
-                serviceName: "OrderWebApi",
-                serviceVersion: "1.0.0"
-            )
-    );
-
-    logging.AddOtlpExporter(); // Sends logs to Aspire Dashboard (port 18889)
-});
+builder.Logging.AddCustomLogging("OrderWebApi");
 
 // Add DbContext
 builder.Services.AddDbContext<OrderDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// Register HTTP Clients
+builder.Services.AddCustomHttpClients(builder.Configuration);
 
 // Register MediatR
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.Load("Application")));
@@ -59,40 +28,16 @@ builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.Loa
 // Register FluentValidation Validators
 builder.Services.AddValidatorsFromAssembly(Assembly.Load("Application"), includeInternalTypes: true);
 
-builder.Services.AddHttpClient<CatalogServiceClient>(client =>
-{
-    client.BaseAddress = new Uri(builder.Configuration["CatalogService:BaseUrl"]);
-});
-
-builder.Services.AddHttpClient<PaymentServiceClient>(client =>
-{
-    client.BaseAddress = new Uri(builder.Configuration["PaymentService:BaseUrl"]);
-});
-
 // Add OpenTelemetry (Shared)
 builder.Services.AddCustomOpenTelemetry("OrderWebApi", builder.Configuration);
 
 // Add Swagger
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(options =>
-{
-    options.SwaggerDoc("v1", new OpenApiInfo
-    {
-        Title = "Order API",
-        Version = "v1",
-        Description = "API for managing orders in the system",
-        Contact = new OpenApiContact
-        {
-            Name = "Teran Sarathchandra",
-            Email = "teran8777@gmail.com"
-        }
-    });
-});
+builder.Services.AddCustomSwagger("Order API");
 
 var app = builder.Build();
 
-// Add Validation Middleware
-app.UseMiddleware<ValidationMiddleware>();
+// Add Global Middleware
+app.UseGlobalMiddlewares();
 
 // Apply migrations and update the database
 using (var scope = app.Services.CreateScope())
@@ -103,19 +48,8 @@ using (var scope = app.Services.CreateScope())
 // Log HTTP requests
 app.UseSerilogRequestLogging();
 
-// Add exception handling middleware
-app.UseMiddleware<ExceptionMiddleware>();
-
 // Enable Swagger middleware
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI(options =>
-    {
-        options.SwaggerEndpoint("/swagger/v1/swagger.json", "Order API V1");
-        options.RoutePrefix = string.Empty;
-    });
-}
+app.UseCustomSwagger("Order API");
 
 // Map endpoints
 EndpointMappings.MapEndpoints(app);
