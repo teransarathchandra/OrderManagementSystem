@@ -4,6 +4,8 @@
     <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <AssemblyName>CatalogWebApi</AssemblyName>
+    <RootNamespace>CatalogWebApi</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
