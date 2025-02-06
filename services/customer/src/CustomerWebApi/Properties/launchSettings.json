@@ -5,7 +5,9 @@
             "launchBrowser": true,
             "environmentVariables": {
                 "ASPNETCORE_ENVIRONMENT": "Development",
-                "OTEL_EXPORTER_OTLP_ENDPOINT": "http://localhost:18889"
+                "OTEL_EXPORTER_OTLP_ENDPOINT": "http://localhost:18889",
+                "DOTNET_SYSTEM_GLOBALIZATION_INVARIANT": "false",
+                "LANG": "en_US.UTF-8"
             },
             "dotnetRunMessages": true,
             "applicationUrl": "http://localhost:5220"
@@ -15,7 +17,9 @@
             "launchBrowser": true,
             "environmentVariables": {
                 "ASPNETCORE_ENVIRONMENT": "Development",
-                "OTEL_EXPORTER_OTLP_ENDPOINT": "http://localhost:18889"
+                "OTEL_EXPORTER_OTLP_ENDPOINT": "http://localhost:18889",
+                "DOTNET_SYSTEM_GLOBALIZATION_INVARIANT": "false",
+                "LANG": "en_US.UTF-8"
             },
             "dotnetRunMessages": true,
             "applicationUrl": "https://localhost:7184;http://localhost:5220"
@@ -25,7 +29,9 @@
             "launchBrowser": true,
             "environmentVariables": {
                 "ASPNETCORE_ENVIRONMENT": "Development",
-                "OTEL_EXPORTER_OTLP_ENDPOINT": "http://localhost:18889"
+                "OTEL_EXPORTER_OTLP_ENDPOINT": "http://localhost:18889",
+                "DOTNET_SYSTEM_GLOBALIZATION_INVARIANT": "false",
+                "LANG": "en_US.UTF-8"
             }
         }
     },
