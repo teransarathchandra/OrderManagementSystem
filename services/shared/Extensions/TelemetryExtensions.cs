@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
@@ -49,6 +51,22 @@ namespace Shared.Extensions
                 });
 
             return services;
+        }
+
+        public static ILoggingBuilder AddCustomLogging(this ILoggingBuilder logging, string serviceName)
+        {
+            logging.AddOpenTelemetry(options =>
+            {
+                options.IncludeFormattedMessage = true;
+                options.IncludeScopes = true;
+                options.ParseStateValues = true;
+                options.SetResourceBuilder(
+                    ResourceBuilder.CreateDefault().AddService(serviceName)
+                );
+                options.AddOtlpExporter();
+            });
+
+            return logging;
         }
     }
 }
