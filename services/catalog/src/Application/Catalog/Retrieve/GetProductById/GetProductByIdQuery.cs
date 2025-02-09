@@ -1,7 +1,7 @@
 ﻿using Domain.Models;
 using MediatR;
 
-namespace Application.Queries.GetProductById
+namespace Application.Catalog.Retrieve.GetProductById
 {
     public class GetProductByIdQuery : IRequest<Product>
     {

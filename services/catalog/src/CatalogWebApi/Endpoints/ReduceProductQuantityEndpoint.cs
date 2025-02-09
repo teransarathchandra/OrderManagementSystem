@@ -1,4 +1,4 @@
-﻿using Application.Commands.ReduceProductQuantity;
+﻿using Application.Catalog.Inventory;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

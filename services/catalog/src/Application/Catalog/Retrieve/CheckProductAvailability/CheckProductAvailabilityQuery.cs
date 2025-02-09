@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace Application.Queries.CheckProductAvailability
+namespace Application.Catalog.Retrieve.CheckProductAvailability
 {
     public class CheckProductAvailabilityQuery : IRequest<bool>
     {

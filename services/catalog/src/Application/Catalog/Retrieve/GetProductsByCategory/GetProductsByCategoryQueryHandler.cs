@@ -3,7 +3,7 @@ using Infrastructure.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Application.Queries.GetProductsByCategory
+namespace Application.Catalog.Retrieve.GetProductsByCategory
 {
     public class GetProductsByCategoryQueryHandler : IRequestHandler<GetProductsByCategoryQuery, List<Product>>
     {

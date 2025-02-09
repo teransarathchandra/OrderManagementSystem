@@ -3,7 +3,7 @@ using Infrastructure.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Application.Queries.SearchProducts
+namespace Application.Catalog.Retrieve.SearchProducts
 {
     public class SearchProductsQueryHandler : IRequestHandler<SearchProductsQuery, List<Product>>
     {
