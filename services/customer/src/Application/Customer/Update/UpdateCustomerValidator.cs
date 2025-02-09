@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Application.Commands.UpdateCustomer
+namespace Application.Customer.Update
 {
     internal sealed class UpdateCustomerValidator : AbstractValidator<UpdateCustomerDto>
     {

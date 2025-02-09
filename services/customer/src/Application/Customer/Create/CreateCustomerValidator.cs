@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Application.Commands.CreateCustomer
+namespace Application.Customer.Create
 {
     internal sealed class CreateCustomerValidator : AbstractValidator<CreateCustomerDto>
     {

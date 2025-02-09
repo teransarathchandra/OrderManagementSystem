@@ -1,9 +1,9 @@
 ﻿using Domain.Models;
 using MediatR;
 
-namespace Application.Commands.CreateCustomer
+namespace Application.Customer.Create
 {
-    public class CreateCustomerCommand : IRequest<Customer>
+    public class CreateCustomerCommand : IRequest<Domain.Models.Customer>
     {
         public CreateCustomerDto CustomerDto { get; set; }
 

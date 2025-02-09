@@ -1,6 +1,6 @@
-﻿namespace Application.Commands.UpdateCustomer
+﻿namespace Application.Customer.Create
 {
-    public class UpdateCustomerDto
+    public class CreateCustomerDto
     {
         public string Name { get; set; }
         public string Email { get; set; }

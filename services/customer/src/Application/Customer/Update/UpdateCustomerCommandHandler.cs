@@ -2,9 +2,9 @@
 using Infrastructure.Persistence;
 using MediatR;
 
-namespace Application.Commands.UpdateCustomer
+namespace Application.Customer.Update
 {
-    public class UpdateCustomerCommandHandler : IRequestHandler<UpdateCustomerCommand, Customer>
+    public class UpdateCustomerCommandHandler : IRequestHandler<UpdateCustomerCommand, Domain.Models.Customer>
     {
         private readonly CustomerDbContext _dbContext;
 
@@ -13,7 +13,7 @@ namespace Application.Commands.UpdateCustomer
             _dbContext = dbContext;
         }
 
-        public async Task<Customer> Handle(UpdateCustomerCommand request, CancellationToken cancellationToken)
+        public async Task<Domain.Models.Customer> Handle(UpdateCustomerCommand request, CancellationToken cancellationToken)
         {
             var customer = await _dbContext.Customers.FindAsync(request.CustomerId);
             if (customer == null) return null;

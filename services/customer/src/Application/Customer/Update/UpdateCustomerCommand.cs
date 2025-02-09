@@ -1,9 +1,9 @@
 ﻿using Domain.Models;
 using MediatR;
 
-namespace Application.Commands.UpdateCustomer
+namespace Application.Customer.Update
 {
-    public class UpdateCustomerCommand : IRequest<Customer>
+    public class UpdateCustomerCommand : IRequest<Domain.Models.Customer>
     {
         public Guid CustomerId { get; set; }
         public UpdateCustomerDto CustomerDto { get; set; }

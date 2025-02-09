@@ -2,9 +2,9 @@
 using Infrastructure.Persistence;
 using MediatR;
 
-namespace Application.Queries.RetrieveCustomer
+namespace Application.Customer.Retrieve
 {
-    public class RetrieveCustomerQueryHandler : IRequestHandler<RetrieveCustomerQuery, Customer>
+    public class RetrieveCustomerQueryHandler : IRequestHandler<RetrieveCustomerQuery, Domain.Models.Customer>
     {
         private readonly CustomerDbContext _dbContext;
 
@@ -13,7 +13,7 @@ namespace Application.Queries.RetrieveCustomer
             _dbContext = dbContext;
         }
 
-        public async Task<Customer?> Handle(RetrieveCustomerQuery request, CancellationToken cancellationToken)
+        public async Task<Domain.Models.Customer?> Handle(RetrieveCustomerQuery request, CancellationToken cancellationToken)
         {
             return await _dbContext.Customers.FindAsync(new object[] { request.CustomerId }, cancellationToken);
         }
