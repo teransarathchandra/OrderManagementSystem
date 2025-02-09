@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace Application.Catalog.Inventory
+namespace Application.Catalog.Inventory.ReduceProductQuantity
 {
     public class ReduceProductQuantityCommand : IRequest<bool>
     {
