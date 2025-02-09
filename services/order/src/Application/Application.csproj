@@ -16,4 +16,10 @@
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Commands\" />
+    <Folder Include="Queries\GetOrder\" />
+    <Folder Include="Queries\ListCustomerOrders\" />
+  </ItemGroup>
+
 </Project>

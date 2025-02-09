@@ -1,19 +1,18 @@
-﻿using Domain.Models;
-using Infrastructure.Persistence;
+﻿using Infrastructure.Persistence;
 using MediatR;
 
-namespace Application.Commands.CancelOrder
+namespace Application.Order.Update
 {
-    public class CancelOrderCommandHandler : IRequestHandler<CancelOrderCommand, bool>
+    public class UpdateOrderStatusCommandHandler : IRequestHandler<UpdateOrderStatusCommand, bool>
     {
         private readonly OrderDbContext _dbContext;
 
-        public CancelOrderCommandHandler(OrderDbContext dbContext)
+        public UpdateOrderStatusCommandHandler(OrderDbContext dbContext)
         {
             _dbContext = dbContext;
         }
 
-        public async Task<bool> Handle(CancelOrderCommand request, CancellationToken cancellationToken)
+        public async Task<bool> Handle(UpdateOrderStatusCommand request, CancellationToken cancellationToken)
         {
             var order = await _dbContext.Orders.FindAsync(request.OrderId);
 
@@ -22,7 +21,7 @@ namespace Application.Commands.CancelOrder
                 return false;
             }
 
-            order.Status = OrderStatus.Canceled;
+            order.Status = request.Status;
             await _dbContext.SaveChangesAsync(cancellationToken);
 
             return true;

@@ -1,4 +1,4 @@
-﻿using Application.Commands.CancelOrder;
+﻿using Application.Order.Delete;
 using MediatR;
 
 namespace OrderWebApi.Endpoints

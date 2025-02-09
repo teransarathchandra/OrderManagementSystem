@@ -1,4 +1,4 @@
-﻿using Application.Queries.ListCustomerOrders;
+﻿using Application.Order.Retrieve;
 using MediatR;
 
 namespace OrderWebApi.Endpoints

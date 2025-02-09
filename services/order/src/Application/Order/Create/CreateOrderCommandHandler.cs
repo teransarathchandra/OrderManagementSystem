@@ -3,9 +3,9 @@ using Infrastructure.Persistence;
 using Infrastructure.Services;
 using MediatR;
 
-namespace Application.Commands.CreateOrder
+namespace Application.Order.Create
 {
-    public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, Order>
+    public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, Domain.Models.Order>
     {
         private readonly OrderDbContext _dbContext;
         private readonly CatalogServiceClient _catalogService;
@@ -18,7 +18,7 @@ namespace Application.Commands.CreateOrder
             //_paymentService = paymentService;
         }
 
-        public async Task<Order> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
+        public async Task<Domain.Models.Order> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
         {
             // Fetch prices and validate product availability
             var orderItems = new List<OrderItem>();
@@ -50,7 +50,7 @@ namespace Application.Commands.CreateOrder
             }
 
             // Create order
-            var order = new Order
+            var order = new Domain.Models.Order
             {
                 CustomerId = request.OrderDto.CustomerId,
                 Items = orderItems,
