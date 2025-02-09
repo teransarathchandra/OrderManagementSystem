@@ -4,11 +4,11 @@ using MediatR;
 
 namespace Application.Queries.RetrieveCustomer
 {
-    public class RetrieveCustomerHandler : IRequestHandler<RetrieveCustomerQuery, Customer>
+    public class RetrieveCustomerQueryHandler : IRequestHandler<RetrieveCustomerQuery, Customer>
     {
         private readonly CustomerDbContext _dbContext;
 
-        public RetrieveCustomerHandler(CustomerDbContext dbContext)
+        public RetrieveCustomerQueryHandler(CustomerDbContext dbContext)
         {
             _dbContext = dbContext;
         }

@@ -3,11 +3,11 @@ using MediatR;
 
 namespace Application.Queries.CheckProductAvailability
 {
-    public class CheckProductAvailabilityHandler : IRequestHandler<CheckProductAvailabilityQuery, bool>
+    public class CheckProductAvailabilityQueryHandler : IRequestHandler<CheckProductAvailabilityQuery, bool>
     {
         private readonly CatalogDbContext _dbContext;
 
-        public CheckProductAvailabilityHandler(CatalogDbContext dbContext)
+        public CheckProductAvailabilityQueryHandler(CatalogDbContext dbContext)
         {
             _dbContext = dbContext;
         }

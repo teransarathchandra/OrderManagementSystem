@@ -4,11 +4,11 @@ using MediatR;
 
 namespace Application.Commands.CancelOrder
 {
-    public class CancelOrderHandler : IRequestHandler<CancelOrderCommand, bool>
+    public class CancelOrderCommandHandler : IRequestHandler<CancelOrderCommand, bool>
     {
         private readonly OrderDbContext _dbContext;
 
-        public CancelOrderHandler(OrderDbContext dbContext)
+        public CancelOrderCommandHandler(OrderDbContext dbContext)
         {
             _dbContext = dbContext;
         }

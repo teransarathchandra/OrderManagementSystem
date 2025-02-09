@@ -5,13 +5,13 @@ using MediatR;
 
 namespace Application.Commands.CreateOrder
 {
-    public class CreateOrderHandler : IRequestHandler<CreateOrderCommand, Order>
+    public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, Order>
     {
         private readonly OrderDbContext _dbContext;
         private readonly CatalogServiceClient _catalogService;
         //private readonly PaymentServiceClient _paymentService;
 
-        public CreateOrderHandler(OrderDbContext dbContext, CatalogServiceClient catalogService, PaymentServiceClient paymentService)
+        public CreateOrderCommandHandler(OrderDbContext dbContext, CatalogServiceClient catalogService, PaymentServiceClient paymentService)
         {
             _dbContext = dbContext;
             _catalogService = catalogService;

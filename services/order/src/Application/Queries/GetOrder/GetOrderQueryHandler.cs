@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.Queries.GetOrder
 {
-    public class GetOrderHandler : IRequestHandler<GetOrderQuery, Order>
+    public class GetOrderQueryHandler : IRequestHandler<GetOrderQuery, Order>
     {
         private readonly OrderDbContext _dbContext;
 
-        public GetOrderHandler(OrderDbContext dbContext)
+        public GetOrderQueryHandler(OrderDbContext dbContext)
         {
             _dbContext = dbContext;
         }

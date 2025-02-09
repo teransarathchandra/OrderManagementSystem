@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.Queries.SearchProducts
 {
-    public class SearchProductsHandler : IRequestHandler<SearchProductsQuery, List<Product>>
+    public class SearchProductsQueryHandler : IRequestHandler<SearchProductsQuery, List<Product>>
     {
         private readonly CatalogDbContext _dbContext;
 
-        public SearchProductsHandler(CatalogDbContext dbContext)
+        public SearchProductsQueryHandler(CatalogDbContext dbContext)
         {
             _dbContext = dbContext;
         }

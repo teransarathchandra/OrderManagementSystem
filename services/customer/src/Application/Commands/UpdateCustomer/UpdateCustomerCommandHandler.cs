@@ -4,11 +4,11 @@ using MediatR;
 
 namespace Application.Commands.UpdateCustomer
 {
-    public class UpdateCustomerHandler : IRequestHandler<UpdateCustomerCommand, Customer>
+    public class UpdateCustomerCommandHandler : IRequestHandler<UpdateCustomerCommand, Customer>
     {
         private readonly CustomerDbContext _dbContext;
 
-        public UpdateCustomerHandler(CustomerDbContext dbContext)
+        public UpdateCustomerCommandHandler(CustomerDbContext dbContext)
         {
             _dbContext = dbContext;
         }

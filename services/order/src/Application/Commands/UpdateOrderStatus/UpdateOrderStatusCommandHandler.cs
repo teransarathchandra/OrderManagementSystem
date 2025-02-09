@@ -3,11 +3,11 @@ using MediatR;
 
 namespace Application.Commands.UpdateOrderStatus
 {
-    public class UpdateOrderStatusHandler : IRequestHandler<UpdateOrderStatusCommand, bool>
+    public class UpdateOrderStatusCommandHandler : IRequestHandler<UpdateOrderStatusCommand, bool>
     {
         private readonly OrderDbContext _dbContext;
 
-        public UpdateOrderStatusHandler(OrderDbContext dbContext)
+        public UpdateOrderStatusCommandHandler(OrderDbContext dbContext)
         {
             _dbContext = dbContext;
         }

@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.Queries.GetCategories
 {
-    public class GetCategoriesHandler : IRequestHandler<GetCategoriesQuery, List<Category>>
+    public class GetCategoriesQueryHandler : IRequestHandler<GetCategoriesQuery, List<Category>>
     {
         private readonly CatalogDbContext _dbContext;
 
-        public GetCategoriesHandler(CatalogDbContext dbContext)
+        public GetCategoriesQueryHandler(CatalogDbContext dbContext)
         {
             _dbContext = dbContext;
         }
