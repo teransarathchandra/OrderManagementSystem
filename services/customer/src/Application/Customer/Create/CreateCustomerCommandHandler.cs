@@ -2,9 +2,9 @@
 using Infrastructure.Persistence;
 using MediatR;
 
-namespace Application.Commands.CreateCustomer
+namespace Application.Customer.Create
 {
-    public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerCommand, Customer>
+    public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerCommand, Domain.Models.Customer>
     {
         private readonly CustomerDbContext _dbContext;
 
@@ -13,9 +13,9 @@ namespace Application.Commands.CreateCustomer
             _dbContext = dbContext;
         }
 
-        public async Task<Customer> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
+        public async Task<Domain.Models.Customer> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
         {
-            var customer = new Customer
+            var customer = new Domain.Models.Customer
             {
                 Name = request.CustomerDto.Name,
                 Email = request.CustomerDto.Email,
