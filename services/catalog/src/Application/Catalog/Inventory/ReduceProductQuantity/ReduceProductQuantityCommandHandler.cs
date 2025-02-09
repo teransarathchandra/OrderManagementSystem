@@ -1,7 +1,7 @@
 ﻿using Infrastructure.Persistence;
 using MediatR;
 
-namespace Application.Catalog.Inventory
+namespace Application.Catalog.Inventory.ReduceProductQuantity
 {
     public class ReduceProductQuantityCommandHandler : IRequestHandler<ReduceProductQuantityCommand, bool>
     {
