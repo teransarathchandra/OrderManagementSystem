@@ -1,7 +1,7 @@
 ﻿using Domain.Models;
 using MediatR;
 
-namespace Application.Queries.GetCategoryById
+namespace Application.Catalog.Retrieve.GetCategoryById
 {
     public class GetCategoryByIdQuery : IRequest<Category>
     {

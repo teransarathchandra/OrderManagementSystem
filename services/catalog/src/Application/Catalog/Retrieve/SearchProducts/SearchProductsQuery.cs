@@ -1,7 +1,7 @@
 ﻿using Domain.Models;
 using MediatR;
 
-namespace Application.Queries.SearchProducts
+namespace Application.Catalog.Retrieve.SearchProducts
 {
     public class SearchProductsQuery : IRequest<List<Product>>
     {

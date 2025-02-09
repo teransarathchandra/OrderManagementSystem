@@ -1,7 +1,7 @@
 ﻿using Domain.Models;
 using MediatR;
 
-namespace Application.Queries.GetCategories
+namespace Application.Catalog.Retrieve.GetCategories
 {
     public class GetCategoriesQuery : IRequest<List<Category>>
     {

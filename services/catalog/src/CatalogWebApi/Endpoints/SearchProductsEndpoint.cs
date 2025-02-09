@@ -1,4 +1,4 @@
-﻿using Application.Queries.SearchProducts;
+﻿using Application.Catalog.Retrieve.SearchProducts;
 using MediatR;
 
 namespace CatalogWebApi.Endpoints

@@ -1,4 +1,4 @@
-﻿using Application.Queries.CheckProductAvailability;
+﻿using Application.Catalog.Retrieve.CheckProductAvailability;
 using MediatR;
 
 namespace CatalogWebApi.Endpoints

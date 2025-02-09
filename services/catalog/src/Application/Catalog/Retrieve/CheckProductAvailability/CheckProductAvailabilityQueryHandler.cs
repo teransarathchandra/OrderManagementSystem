@@ -1,7 +1,7 @@
 ﻿using Infrastructure.Persistence;
 using MediatR;
 
-namespace Application.Queries.CheckProductAvailability
+namespace Application.Catalog.Retrieve.CheckProductAvailability
 {
     public class CheckProductAvailabilityQueryHandler : IRequestHandler<CheckProductAvailabilityQuery, bool>
     {
