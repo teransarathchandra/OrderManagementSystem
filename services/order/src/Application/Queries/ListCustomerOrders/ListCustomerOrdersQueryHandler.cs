@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.Queries.ListCustomerOrders
 {
-    public class ListCustomerOrdersHandler : IRequestHandler<ListCustomerOrdersQuery, List<Order>>
+    public class ListCustomerOrdersQueryHandler : IRequestHandler<ListCustomerOrdersQuery, List<Order>>
     {
         private readonly OrderDbContext _dbContext;
 
-        public ListCustomerOrdersHandler(OrderDbContext dbContext)
+        public ListCustomerOrdersQueryHandler(OrderDbContext dbContext)
         {
             _dbContext = dbContext;
         }

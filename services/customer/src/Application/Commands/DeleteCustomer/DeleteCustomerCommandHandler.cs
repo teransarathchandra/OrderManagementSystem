@@ -3,11 +3,11 @@ using MediatR;
 
 namespace Application.Commands.DeleteCustomer
 {
-    public class DeleteCustomerHandler : IRequestHandler<DeleteCustomerCommand, bool>
+    public class DeleteCustomerCommandHandler : IRequestHandler<DeleteCustomerCommand, bool>
     {
         private readonly CustomerDbContext _dbContext;
 
-        public DeleteCustomerHandler(CustomerDbContext dbContext)
+        public DeleteCustomerCommandHandler(CustomerDbContext dbContext)
         {
             _dbContext = dbContext;
         }

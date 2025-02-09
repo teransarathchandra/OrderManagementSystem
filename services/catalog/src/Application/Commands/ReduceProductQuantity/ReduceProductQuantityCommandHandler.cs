@@ -3,11 +3,11 @@ using MediatR;
 
 namespace Application.Commands.ReduceProductQuantity
 {
-    public class ReduceProductQuantityHandler : IRequestHandler<ReduceProductQuantityCommand, bool>
+    public class ReduceProductQuantityCommandHandler : IRequestHandler<ReduceProductQuantityCommand, bool>
     {
         private readonly CatalogDbContext _dbContext;
 
-        public ReduceProductQuantityHandler(CatalogDbContext dbContext)
+        public ReduceProductQuantityCommandHandler(CatalogDbContext dbContext)
         {
             _dbContext = dbContext;
         }
