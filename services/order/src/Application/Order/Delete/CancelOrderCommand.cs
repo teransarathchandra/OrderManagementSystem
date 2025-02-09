@@ -1,6 +1,6 @@
 ﻿using MediatR;
 
-namespace Application.Commands.CancelOrder
+namespace Application.Order.Delete
 {
     public class CancelOrderCommand : IRequest<bool>
     {

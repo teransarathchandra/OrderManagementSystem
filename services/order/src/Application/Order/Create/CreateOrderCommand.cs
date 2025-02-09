@@ -1,9 +1,9 @@
 ﻿using Domain.Models;
 using MediatR;
 
-namespace Application.Commands.CreateOrder
+namespace Application.Order.Create
 {
-    public class CreateOrderCommand : IRequest<Order>
+    public class CreateOrderCommand : IRequest<Domain.Models.Order>
     {
         public CreateOrderDto OrderDto { get; }
 

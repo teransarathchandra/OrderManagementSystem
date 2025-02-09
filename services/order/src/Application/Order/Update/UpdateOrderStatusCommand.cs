@@ -1,7 +1,7 @@
 ﻿using Domain.Models;
 using MediatR;
 
-namespace Application.Commands.UpdateOrderStatus
+namespace Application.Order.Update
 {
     public class UpdateOrderStatusCommand : IRequest<bool>
     {

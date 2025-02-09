@@ -1,4 +1,4 @@
-﻿namespace Application.Commands.CreateOrder
+﻿namespace Application.Order.Create
 {
     public class OrderItemDto
     {

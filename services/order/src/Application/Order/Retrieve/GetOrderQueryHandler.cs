@@ -3,9 +3,9 @@ using Infrastructure.Persistence;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace Application.Queries.GetOrder
+namespace Application.Order.Retrieve
 {
-    public class GetOrderQueryHandler : IRequestHandler<GetOrderQuery, Order>
+    public class GetOrderQueryHandler : IRequestHandler<GetOrderQuery, Domain.Models.Order>
     {
         private readonly OrderDbContext _dbContext;
 
@@ -14,7 +14,7 @@ namespace Application.Queries.GetOrder
             _dbContext = dbContext;
         }
 
-        public async Task<Order?> Handle(GetOrderQuery request, CancellationToken cancellationToken)
+        public async Task<Domain.Models.Order?> Handle(GetOrderQuery request, CancellationToken cancellationToken)
         {
             return await _dbContext.Orders
                 .Include(o => o.Items) // Include related OrderItems

@@ -1,9 +1,9 @@
 ﻿using Domain.Models;
 using MediatR;
 
-namespace Application.Queries.GetOrder
+namespace Application.Order.Retrieve
 {
-    public class GetOrderQuery : IRequest<Order>
+    public class GetOrderQuery : IRequest<Domain.Models.Order>
     {
         public Guid OrderId { get; }
 

@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace Application.Commands.CreateOrder
+namespace Application.Order.Create
 {
     internal sealed class CreateOrderValidator : AbstractValidator<CreateOrderDto>
     {
