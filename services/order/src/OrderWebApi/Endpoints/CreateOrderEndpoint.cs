@@ -1,4 +1,4 @@
-﻿using Application.Commands.CreateOrder;
+﻿using Application.Order.Create;
 using MediatR;
 using Shared.Middleware;
 

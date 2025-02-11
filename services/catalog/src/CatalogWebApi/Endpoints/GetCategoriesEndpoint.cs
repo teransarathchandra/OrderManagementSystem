@@ -1,4 +1,4 @@
-﻿using Application.Queries.GetCategories;
+﻿using Application.Catalog.Retrieve.GetCategories;
 using MediatR;
 
 namespace CatalogWebApi.Endpoints

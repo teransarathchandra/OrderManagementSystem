@@ -1,4 +1,4 @@
-﻿using Application.Queries.GetProductById;
+﻿using Application.Catalog.Retrieve.GetProductById;
 using MediatR;
 
 namespace CatalogWebApi.Endpoints

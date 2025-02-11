@@ -1,4 +1,4 @@
-﻿using Application.Queries.RetrieveCustomer;
+﻿using Application.Customer.Retrieve;
 using MediatR;
 
 namespace CustomerWebApi.Endpoints

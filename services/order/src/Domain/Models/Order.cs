@@ -9,14 +9,4 @@
         public DateTime CreatedAt { get; set; }
         public OrderStatus Status { get; set; }
     }
-
-    public enum OrderStatus
-    {
-        Pending,
-        Confirmed,
-        PaymentFailed,
-        Shipped,
-        Delivered,
-        Canceled
-    }
 }
