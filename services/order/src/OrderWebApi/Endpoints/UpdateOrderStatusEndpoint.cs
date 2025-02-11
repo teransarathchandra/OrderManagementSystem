@@ -1,4 +1,4 @@
-﻿using Application.Commands.UpdateOrderStatus;
+﻿using Application.Order.Update;
 using Domain.Models;
 using MediatR;
 

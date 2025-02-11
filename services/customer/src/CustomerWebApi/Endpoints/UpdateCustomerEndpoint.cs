@@ -1,4 +1,4 @@
-﻿using Application.Commands.UpdateCustomer;
+﻿using Application.Customer.Update;
 using MediatR;
 using Shared.Middleware;
 

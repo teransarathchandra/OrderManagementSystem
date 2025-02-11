@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using System.Text.Json;
+using FluentValidation;
 using Microsoft.AspNetCore.Http;
 
 namespace Shared.Middleware
