@@ -3,13 +3,8 @@ using MediatR;
 
 namespace Application.Order.Retrieve
 {
-    public class GetOrderQuery : IRequest<Domain.Models.Order>
+    public class GetOrderQuery(Guid orderId) : IRequest<Domain.Models.Order>
     {
-        public Guid OrderId { get; }
-
-        public GetOrderQuery(Guid orderId)
-        {
-            OrderId = orderId;
-        }
+        public Guid OrderId { get; } = orderId;
     }
 }
