@@ -5,19 +5,8 @@ using MediatR;
 
 namespace Application.Order.Create
 {
-    public class CreateOrderCommandHandler : IRequestHandler<CreateOrderCommand, Domain.Models.Order>
+    public class CreateOrderCommandHandler(OrderDbContext dbContext, CatalogServiceClient catalogService, PaymentServiceClient paymentService) : IRequestHandler<CreateOrderCommand, Domain.Models.Order>
     {
-        private readonly OrderDbContext _dbContext;
-        private readonly CatalogServiceClient _catalogService;
-        //private readonly PaymentServiceClient _paymentService;
-
-        public CreateOrderCommandHandler(OrderDbContext dbContext, CatalogServiceClient catalogService, PaymentServiceClient paymentService)
-        {
-            _dbContext = dbContext;
-            _catalogService = catalogService;
-            //_paymentService = paymentService;
-        }
-
         public async Task<Domain.Models.Order> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
         {
             // Fetch prices and validate product availability
@@ -26,14 +15,14 @@ namespace Application.Order.Create
             foreach (var item in request.OrderDto.Items)
             {
                 // Validate product availability
-                var isAvailable = await _catalogService.CheckProductAvailabilityAsync(item.ProductId, item.Quantity);
+                var isAvailable = await catalogService.CheckProductAvailabilityAsync(item.ProductId, item.Quantity);
                 if (!isAvailable)
                 {
                     throw new InvalidOperationException($"Product {item.ProductId} is not available in sufficient quantity.");
                 }
 
                 // Fetch product details (including price)
-                var product = await _catalogService.GetProductByIdAsync(item.ProductId);
+                var product = await catalogService.GetProductByIdAsync(item.ProductId);
                 if (product == null)
                 {
                     throw new InvalidOperationException($"Product {item.ProductId} not found.");
@@ -59,15 +48,15 @@ namespace Application.Order.Create
                 Status = OrderStatus.Pending
             };
 
-            _dbContext.Orders.Add(order);
-            await _dbContext.SaveChangesAsync(cancellationToken);
+            dbContext.Orders.Add(order);
+            await dbContext.SaveChangesAsync(cancellationToken);
 
             // Reduce product quantities
             foreach (var item in orderItems)
             {
                 try
                 {
-                    await _catalogService.ReduceProductQuantityAsync(item.ProductId, item.Quantity);
+                    await catalogService.ReduceProductQuantityAsync(item.ProductId, item.Quantity);
                 }
                 catch (InvalidOperationException ex)
                 {
@@ -85,7 +74,7 @@ namespace Application.Order.Create
             //}
 
             order.Status = OrderStatus.Confirmed;
-            await _dbContext.SaveChangesAsync(cancellationToken);
+            await dbContext.SaveChangesAsync(cancellationToken);
 
             return order;
         }

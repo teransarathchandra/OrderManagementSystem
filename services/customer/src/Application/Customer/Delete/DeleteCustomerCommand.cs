@@ -1,14 +1,9 @@
 ﻿using MediatR;
 
-namespace Application.Commands.DeleteCustomer
+namespace Application.Customer.Delete
 {
-    public class DeleteCustomerCommand : IRequest<bool>
+    public class DeleteCustomerCommand(Guid customerId) : IRequest<bool>
     {
-        public Guid CustomerId { get; }
-
-        public DeleteCustomerCommand(Guid customerId)
-        {
-            CustomerId = customerId;
-        }
+        public Guid CustomerId { get; } = customerId;
     }
 }

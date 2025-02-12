@@ -6,22 +6,13 @@ using Serilog;
 
 namespace Shared.Middleware
 {
-    public class ExceptionMiddleware
+    public class ExceptionMiddleware(RequestDelegate next, IWebHostEnvironment env)
     {
-        private readonly RequestDelegate _next;
-        private readonly IWebHostEnvironment _env;
-
-        public ExceptionMiddleware(RequestDelegate next, IWebHostEnvironment env)
-        {
-            _next = next;
-            _env = env;
-        }
-
         public async Task InvokeAsync(HttpContext context)
         {
             try
             {
-                await _next(context); // Process the next middleware in the pipeline
+                await next(context); // Process the next middleware in the pipeline
             }
             catch (Exception ex)
             {
@@ -40,7 +31,7 @@ namespace Shared.Middleware
             var errorResponse = new
             {
                 Error = "An error occurred while processing your request.",
-                Details = _env.IsDevelopment() ? exception.Message : null
+                Details = env.IsDevelopment() ? exception.Message : null
             };
 
             return context.Response.WriteAsync(JsonSerializer.Serialize(errorResponse));

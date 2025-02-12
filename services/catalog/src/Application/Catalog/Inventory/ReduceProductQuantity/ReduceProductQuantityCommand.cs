@@ -2,15 +2,9 @@
 
 namespace Application.Catalog.Inventory.ReduceProductQuantity
 {
-    public class ReduceProductQuantityCommand : IRequest<bool>
+    public class ReduceProductQuantityCommand(Guid productId, int quantity) : IRequest<bool>
     {
-        public Guid ProductId { get; }
-        public int Quantity { get; }
-
-        public ReduceProductQuantityCommand(Guid productId, int quantity)
-        {
-            ProductId = productId;
-            Quantity = quantity;
-        }
+        public Guid ProductId { get; } = productId;
+        public int Quantity { get; } = quantity;
     }
 }

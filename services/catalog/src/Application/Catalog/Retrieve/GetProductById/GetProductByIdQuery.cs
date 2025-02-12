@@ -3,13 +3,8 @@ using MediatR;
 
 namespace Application.Catalog.Retrieve.GetProductById
 {
-    public class GetProductByIdQuery : IRequest<Product>
+    public class GetProductByIdQuery(Guid productId) : IRequest<Product>
     {
-        public Guid ProductId { get; }
-
-        public GetProductByIdQuery(Guid productId)
-        {
-            ProductId = productId;
-        }
+        public Guid ProductId { get; } = productId;
     }
 }

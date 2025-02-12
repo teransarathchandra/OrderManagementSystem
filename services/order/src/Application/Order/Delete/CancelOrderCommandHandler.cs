@@ -4,18 +4,11 @@ using MediatR;
 
 namespace Application.Order.Delete
 {
-    public class CancelOrderCommandHandler : IRequestHandler<CancelOrderCommand, bool>
+    public class CancelOrderCommandHandler(OrderDbContext dbContext) : IRequestHandler<CancelOrderCommand, bool>
     {
-        private readonly OrderDbContext _dbContext;
-
-        public CancelOrderCommandHandler(OrderDbContext dbContext)
-        {
-            _dbContext = dbContext;
-        }
-
         public async Task<bool> Handle(CancelOrderCommand request, CancellationToken cancellationToken)
         {
-            var order = await _dbContext.Orders.FindAsync(request.OrderId);
+            var order = await dbContext.Orders.FindAsync(request.OrderId);
 
             if (order == null)
             {
@@ -23,7 +16,7 @@ namespace Application.Order.Delete
             }
 
             order.Status = OrderStatus.Canceled;
-            await _dbContext.SaveChangesAsync(cancellationToken);
+            await dbContext.SaveChangesAsync(cancellationToken);
 
             return true;
         }

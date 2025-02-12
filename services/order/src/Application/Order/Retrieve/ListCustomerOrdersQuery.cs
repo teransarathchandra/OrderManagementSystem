@@ -1,15 +1,9 @@
-﻿using Domain.Models;
-using MediatR;
+﻿using MediatR;
 
 namespace Application.Order.Retrieve
 {
-    public class ListCustomerOrdersQuery : IRequest<List<Domain.Models.Order>>
+    public class ListCustomerOrdersQuery(Guid customerId) : IRequest<List<Domain.Models.Order>>
     {
-        public Guid CustomerId { get; }
-
-        public ListCustomerOrdersQuery(Guid customerId)
-        {
-            CustomerId = customerId;
-        }
+        public Guid CustomerId { get; } = customerId;
     }
 }

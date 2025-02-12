@@ -1,4 +1,4 @@
-﻿using Application.Commands.DeleteCustomer;
+﻿using Application.Customer.Delete;
 using MediatR;
 
 namespace CustomerWebApi.Endpoints

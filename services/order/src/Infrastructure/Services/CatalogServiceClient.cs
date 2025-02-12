@@ -3,18 +3,11 @@ using Domain.Models;
 
 namespace Infrastructure.Services
 {
-    public class CatalogServiceClient
+    public class CatalogServiceClient(HttpClient httpClient)
     {
-        private readonly HttpClient _httpClient;
-
-        public CatalogServiceClient(HttpClient httpClient)
-        {
-            _httpClient = httpClient;
-        }
-
         public async Task<bool> CheckProductAvailabilityAsync(Guid productId, int quantity)
         {
-            var response = await _httpClient.GetAsync($"/catalog/products/{productId}/availability?quantity={quantity}");
+            var response = await httpClient.GetAsync($"/catalog/products/{productId}/availability?quantity={quantity}");
             if (!response.IsSuccessStatusCode)
             {
                 return false;
@@ -25,7 +18,7 @@ namespace Infrastructure.Services
 
         public async Task<bool> ReduceProductQuantityAsync(Guid productId, int quantity)
         {
-            var response = await _httpClient.PostAsync($"/catalog/products/{productId}/reduce?quantity={quantity}", null);
+            var response = await httpClient.PostAsync($"/catalog/products/{productId}/reduce?quantity={quantity}", null);
 
             if (!response.IsSuccessStatusCode)
             {
@@ -48,7 +41,7 @@ namespace Infrastructure.Services
 
         public async Task<Product> GetProductByIdAsync(Guid productId)
         {
-            var response = await _httpClient.GetAsync($"/catalog/products/{productId}");
+            var response = await httpClient.GetAsync($"/catalog/products/{productId}");
             if (!response.IsSuccessStatusCode)
             {
                 throw new InvalidOperationException($"Failed to fetch details for Product {productId}");

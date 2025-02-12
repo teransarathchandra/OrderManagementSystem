@@ -2,13 +2,8 @@
 
 namespace Application.Order.Delete
 {
-    public class CancelOrderCommand : IRequest<bool>
+    public class CancelOrderCommand(Guid orderId) : IRequest<bool>
     {
-        public Guid OrderId { get; }
-
-        public CancelOrderCommand(Guid orderId)
-        {
-            OrderId = orderId;
-        }
+        public Guid OrderId { get; } = orderId;
     }
 }

@@ -5,18 +5,12 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.Catalog.Retrieve.GetProductsByCategory
 {
-    public class GetProductsByCategoryQueryHandler : IRequestHandler<GetProductsByCategoryQuery, List<Product>>
+    public class GetProductsByCategoryQueryHandler(CatalogDbContext dbContext)
+        : IRequestHandler<GetProductsByCategoryQuery, List<Product>>
     {
-        private readonly CatalogDbContext _dbContext;
-
-        public GetProductsByCategoryQueryHandler(CatalogDbContext dbContext)
-        {
-            _dbContext = dbContext;
-        }
-
         public async Task<List<Product>> Handle(GetProductsByCategoryQuery request, CancellationToken cancellationToken)
         {
-            return await _dbContext.Products
+            return await dbContext.Products
                 .Where(p => p.CategoryId == request.CategoryId)
                 .Include(p => p.Category)
                 .ToListAsync(cancellationToken);
