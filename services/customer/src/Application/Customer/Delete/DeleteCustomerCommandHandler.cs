@@ -1,7 +1,7 @@
 ﻿using Infrastructure.Persistence;
 using MediatR;
 
-namespace Application.Commands.DeleteCustomer
+namespace Application.Customer.Delete
 {
     public class DeleteCustomerCommandHandler(CustomerDbContext dbContext)
         : IRequestHandler<DeleteCustomerCommand, bool>
