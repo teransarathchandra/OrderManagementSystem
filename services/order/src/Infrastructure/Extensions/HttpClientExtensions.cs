@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Shared.Extensions
+namespace Infrastructure.Extensions
 {
     public static class HttpClientExtensions
     {
