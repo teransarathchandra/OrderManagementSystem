@@ -1,5 +1,4 @@
-﻿using Domain.Models;
-using Infrastructure.Persistence;
+﻿using Infrastructure.Persistence;
 using MediatR;
 
 namespace Application.Customer.Update
