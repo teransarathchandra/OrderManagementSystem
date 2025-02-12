@@ -3,11 +3,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence
 {
-    public class CustomerDbContext : DbContext
+    public class CustomerDbContext(DbContextOptions<CustomerDbContext> options) : DbContext(options)
     {
-        public CustomerDbContext(DbContextOptions<CustomerDbContext> options)
-            : base(options) { }
-
         public DbSet<Customer> Customers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

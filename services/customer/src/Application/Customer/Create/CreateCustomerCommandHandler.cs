@@ -4,15 +4,9 @@ using MediatR;
 
 namespace Application.Customer.Create
 {
-    public class CreateCustomerCommandHandler : IRequestHandler<CreateCustomerCommand, Domain.Models.Customer>
+    public class CreateCustomerCommandHandler(CustomerDbContext dbContext)
+        : IRequestHandler<CreateCustomerCommand, Domain.Models.Customer>
     {
-        private readonly CustomerDbContext _dbContext;
-
-        public CreateCustomerCommandHandler(CustomerDbContext dbContext)
-        {
-            _dbContext = dbContext;
-        }
-
         public async Task<Domain.Models.Customer> Handle(CreateCustomerCommand request, CancellationToken cancellationToken)
         {
             var customer = new Domain.Models.Customer
@@ -22,8 +16,8 @@ namespace Application.Customer.Create
                 Address = request.CustomerDto.Address
             };
 
-            _dbContext.Customers.Add(customer);
-            await _dbContext.SaveChangesAsync(cancellationToken);
+            dbContext.Customers.Add(customer);
+            await dbContext.SaveChangesAsync(cancellationToken);
 
             return customer;
         }

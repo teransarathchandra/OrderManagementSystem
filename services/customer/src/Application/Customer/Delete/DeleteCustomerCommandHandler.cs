@@ -3,25 +3,19 @@ using MediatR;
 
 namespace Application.Commands.DeleteCustomer
 {
-    public class DeleteCustomerCommandHandler : IRequestHandler<DeleteCustomerCommand, bool>
+    public class DeleteCustomerCommandHandler(CustomerDbContext dbContext)
+        : IRequestHandler<DeleteCustomerCommand, bool>
     {
-        private readonly CustomerDbContext _dbContext;
-
-        public DeleteCustomerCommandHandler(CustomerDbContext dbContext)
-        {
-            _dbContext = dbContext;
-        }
-
         public async Task<bool> Handle(DeleteCustomerCommand request, CancellationToken cancellationToken)
         {
-            var customer = await _dbContext.Customers.FindAsync(new object[] { request.CustomerId }, cancellationToken);
+            var customer = await dbContext.Customers.FindAsync(new object[] { request.CustomerId }, cancellationToken);
             if (customer == null)
             {
                 return false;
             }
 
-            _dbContext.Customers.Remove(customer);
-            await _dbContext.SaveChangesAsync(cancellationToken);
+            dbContext.Customers.Remove(customer);
+            await dbContext.SaveChangesAsync(cancellationToken);
 
             return true;
         }
