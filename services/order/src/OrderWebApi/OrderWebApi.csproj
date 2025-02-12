@@ -3,7 +3,14 @@
   <PropertyGroup>
     <AssemblyName>OrderWebApi</AssemblyName>
     <RootNamespace>OrderWebApi</RootNamespace>
+    <UserSecretsId>9d59a97c-678c-41c9-af9e-ce8594a9c0da</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\..\..</DockerfileContext>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\shared\Shared.csproj" />
