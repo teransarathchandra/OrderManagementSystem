@@ -3,13 +3,8 @@ using MediatR;
 
 namespace Application.Catalog.Retrieve.SearchProducts
 {
-    public class SearchProductsQuery : IRequest<List<Product>>
+    public class SearchProductsQuery(string query) : IRequest<List<Product>>
     {
-        public string Query { get; }
-
-        public SearchProductsQuery(string query)
-        {
-            Query = query;
-        }
+        public string Query { get; } = query;
     }
 }

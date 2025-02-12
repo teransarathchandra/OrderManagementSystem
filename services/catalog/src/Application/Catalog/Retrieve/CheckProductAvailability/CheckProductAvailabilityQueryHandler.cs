@@ -3,18 +3,11 @@ using MediatR;
 
 namespace Application.Catalog.Retrieve.CheckProductAvailability
 {
-    public class CheckProductAvailabilityQueryHandler : IRequestHandler<CheckProductAvailabilityQuery, bool>
+    public class CheckProductAvailabilityQueryHandler(CatalogDbContext dbContext) : IRequestHandler<CheckProductAvailabilityQuery, bool>
     {
-        private readonly CatalogDbContext _dbContext;
-
-        public CheckProductAvailabilityQueryHandler(CatalogDbContext dbContext)
-        {
-            _dbContext = dbContext;
-        }
-
         public async Task<bool> Handle(CheckProductAvailabilityQuery request, CancellationToken cancellationToken)
         {
-            var product = await _dbContext.Products.FindAsync(request.ProductId);
+            var product = await dbContext.Products.FindAsync(request.ProductId);
 
             if (product == null)
                 return false;
