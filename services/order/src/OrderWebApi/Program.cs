@@ -1,5 +1,6 @@
 using System.Reflection;
 using FluentValidation;
+using Infrastructure.Extensions;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using OrderWebApi.Endpoints;
