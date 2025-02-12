@@ -4,15 +4,8 @@ using Microsoft.AspNetCore.Http;
 
 namespace Shared.Middleware
 {
-    public class ValidationMiddleware
+    public class ValidationMiddleware(RequestDelegate next)
     {
-        private readonly RequestDelegate _next;
-
-        public ValidationMiddleware(RequestDelegate next)
-        {
-            _next = next;
-        }
-
         public async Task InvokeAsync(HttpContext context)
         {
             var endpoint = context.GetEndpoint();
@@ -79,17 +72,12 @@ namespace Shared.Middleware
                 }
             }
 
-            await _next(context);
+            await next(context);
         }
     }
 
-    public class RequiresValidationAttribute : Attribute
+    public class RequiresValidationAttribute(Type dtoType) : Attribute
     {
-        public Type DtoType { get; }
-
-        public RequiresValidationAttribute(Type dtoType)
-        {
-            DtoType = dtoType;
-        }
+        public Type DtoType { get; } = dtoType;
     }
 }
