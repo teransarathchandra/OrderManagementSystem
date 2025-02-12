@@ -3,7 +3,14 @@
   <PropertyGroup>
     <AssemblyName>CatalogWebApi</AssemblyName>
     <RootNamespace>CatalogWebApi</RootNamespace>
+    <UserSecretsId>28943c74-a430-4df0-b9b1-6b6b98722441</UserSecretsId>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <DockerfileContext>..\..\..</DockerfileContext>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.21.0" />
+  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\shared\Shared.csproj" />
