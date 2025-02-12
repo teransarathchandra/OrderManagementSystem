@@ -11,6 +11,9 @@ RUN apt-get update && apt-get install -y libgssapi-krb5-2 && rm -rf /var/lib/apt
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
 
+# Copy directory.build.props first to ensure build settings are available
+COPY services/Directory.Build.props .
+
 # Copy .csproj files for all projects
 COPY services/customer/src/CustomerWebApi/CustomerWebApi.csproj CustomerWebApi/
 COPY services/customer/src/Application/Application.csproj Application/
