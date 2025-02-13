@@ -4,7 +4,7 @@ using Shared.Middleware;
 
 namespace CustomerWebApi.Endpoints
 {
-    public static class RegisterCustomerEndpoint
+    internal static class RegisterCustomerEndpoint
     {
         public static void Map(WebApplication app)
         {

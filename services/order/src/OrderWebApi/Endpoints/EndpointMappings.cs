@@ -2,7 +2,7 @@
 
 namespace OrderWebApi.Endpoints
 {
-    public static class EndpointMappings
+    internal static class EndpointMappings
     {
         public static void MapEndpoints(WebApplication app)
         {

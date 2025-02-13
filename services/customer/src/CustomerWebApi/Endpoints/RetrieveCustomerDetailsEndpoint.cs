@@ -3,7 +3,7 @@ using MediatR;
 
 namespace CustomerWebApi.Endpoints
 {
-    public static class RetrieveCustomerDetailsEndpoint
+    internal static class RetrieveCustomerDetailsEndpoint
     {
         public static void Map(WebApplication app)
         {
