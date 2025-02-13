@@ -4,7 +4,7 @@ using Shared.Middleware;
 
 namespace OrderWebApi.Endpoints
 {
-    public static class CreateOrderEndpoint
+    internal static class CreateOrderEndpoint
     {
         public static void Map(WebApplication app)
         {

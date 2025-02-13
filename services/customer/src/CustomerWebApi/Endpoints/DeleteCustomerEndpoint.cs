@@ -3,7 +3,7 @@ using MediatR;
 
 namespace CustomerWebApi.Endpoints
 {
-    public static class DeleteCustomerEndpoint
+    internal static class DeleteCustomerEndpoint
     {
         public static void Map(WebApplication app)
         {

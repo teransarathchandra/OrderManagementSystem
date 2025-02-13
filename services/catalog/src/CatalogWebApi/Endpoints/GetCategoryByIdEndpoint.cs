@@ -3,7 +3,7 @@ using MediatR;
 
 namespace CatalogWebApi.Endpoints
 {
-    public static class GetCategoryByIdEndpoint
+    internal static class GetCategoryByIdEndpoint
     {
         public static void Map(WebApplication app)
         {

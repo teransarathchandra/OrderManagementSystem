@@ -3,7 +3,7 @@ using MediatR;
 
 namespace OrderWebApi.Endpoints
 {
-    public static class CancelOrderEndpoint
+    internal static class CancelOrderEndpoint
     {
         public static void Map(WebApplication app)
         {

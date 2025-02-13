@@ -5,28 +5,28 @@ EXPOSE 80
 EXPOSE 443
 
 # Install required package for SQL Server connectivity
-RUN apt-get update && apt-get install -y libgssapi-krb5-2 && rm -rf /var/lib/apt/lists/*
+#RUN apt-get update && apt-get install -y libgssapi-krb5-2 && rm -rf /var/lib/apt/lists/*
 
 # Use the .NET SDK for building the application
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
 
 # Copy directory.build.props first to ensure build settings are available
-COPY services/Directory.Build.props .
+COPY Directory.Build.props .
 
 # Copy .csproj files for all projects
-COPY services/catalog/src/CatalogWebApi/CatalogWebApi.csproj CatalogWebApi/
-COPY services/catalog/src/Application/Application.csproj Application/
-COPY services/catalog/src/Infrastructure/Infrastructure.csproj Infrastructure/
-COPY services/catalog/src/Domain/Domain.csproj Domain/
-COPY services/shared/Shared.csproj ../shared/
+COPY catalog/src/CatalogWebApi/CatalogWebApi.csproj CatalogWebApi/
+COPY catalog/src/Application/Application.csproj Application/
+COPY catalog/src/Infrastructure/Infrastructure.csproj Infrastructure/
+COPY catalog/src/Domain/Domain.csproj Domain/
+COPY shared/Shared.csproj ../shared/
 
 # Restore dependencies
 RUN dotnet restore "CatalogWebApi/CatalogWebApi.csproj"
 
 # Copy the entire solution
-COPY services/catalog/src/ /src/
-COPY services/shared/ ../shared/
+COPY catalog/src/ /src/
+COPY shared/ ../shared/
 
 # Build the application
 WORKDIR /src/CatalogWebApi

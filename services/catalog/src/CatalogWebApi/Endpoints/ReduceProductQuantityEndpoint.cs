@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CatalogWebApi.Endpoints
 {
-    public static class ReduceProductQuantityEndpoint
+    internal static class ReduceProductQuantityEndpoint
     {
         public static void Map(WebApplication app)
         {

@@ -2,7 +2,7 @@ services:
   catalog-service:
     build:
       context: .
-      dockerfile: services/catalog/src/CatalogWebApi/Dockerfile
+      dockerfile: catalog/src/CatalogWebApi/Dockerfile
     container_name: catalog-service
     ports:
       - "5001:8080" # Map host port 5001 to container port 8080
@@ -20,7 +20,7 @@ services:
   customer-service:
     build:
       context: .
-      dockerfile: services/customer/src/CustomerWebApi/Dockerfile
+      dockerfile: customer/src/CustomerWebApi/Dockerfile
     container_name: customer-service
     ports:
       - "5002:8080" # Map host port 5002 to container port 8080
@@ -38,7 +38,7 @@ services:
   order-service:
     build:
       context: .
-      dockerfile: services/order/src/OrderWebApi/Dockerfile
+      dockerfile: order/src/OrderWebApi/Dockerfile
     container_name: order-service
     ports:
       - "5003:8080" # Map host port 5003 to container port 8080

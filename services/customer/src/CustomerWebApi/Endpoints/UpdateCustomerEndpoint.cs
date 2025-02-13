@@ -4,7 +4,7 @@ using Shared.Middleware;
 
 namespace CustomerWebApi.Endpoints
 {
-    public static class UpdateCustomerEndpoint
+    internal static class UpdateCustomerEndpoint
     {
         public static void Map(WebApplication app)
         {

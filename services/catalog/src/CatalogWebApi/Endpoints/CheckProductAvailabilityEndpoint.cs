@@ -3,7 +3,7 @@ using MediatR;
 
 namespace CatalogWebApi.Endpoints
 {
-    public static class CheckProductAvailabilityEndpoint
+    internal static class CheckProductAvailabilityEndpoint
     {
         public static void Map(WebApplication app)
         {
