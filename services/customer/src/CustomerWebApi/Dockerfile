@@ -12,7 +12,7 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
 
 # Copy directory.build.props first to ensure build settings are available
-COPY Directory.Build.props .
+COPY Directory.Build.props ../
 
 # Copy .csproj files for all projects
 COPY customer/src/CustomerWebApi/CustomerWebApi.csproj CustomerWebApi/
